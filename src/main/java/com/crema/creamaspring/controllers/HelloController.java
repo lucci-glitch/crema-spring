@@ -1,5 +1,6 @@
 package com.crema.creamaspring.controllers;
 
+import com.crema.creamaspring.scraper.Scraper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @GetMapping("/hello")
-    public String Hello() {
-        return "hello";
+    public void Hello() {
+        Scraper scraper = new Scraper();
+
+        scraper.retrieveData();
+
     }
+
 }
