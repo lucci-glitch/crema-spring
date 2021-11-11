@@ -27,11 +27,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -45,7 +44,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>blog-api-docker</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
