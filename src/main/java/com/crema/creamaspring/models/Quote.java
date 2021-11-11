@@ -10,9 +10,15 @@ import javax.persistence.Id;
 @Data
 @Entity
 public class Quote {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String text;
 
+    public Quote(String text) {
+        this.text = text;
+    }
+
+    public Quote() {}
 }
