@@ -20,9 +20,14 @@ public class Scraper {
                     .connect("https://www.flashback.org/t3369257")
                     .get();
 
-            Elements message = webpage.getElementsByClass("post_message");
+            Elements messages = webpage.getElementsByClass("post_message");
 
-            System.out.println(message);
+             for (var element: messages){
+                 quotes.add(new Quote(element.toString()));
+
+             }
+
+            //System.out.println(quotes);
         }
 
         catch (HttpStatusException e) {
