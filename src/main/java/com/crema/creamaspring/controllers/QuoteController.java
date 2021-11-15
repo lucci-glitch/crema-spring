@@ -2,6 +2,7 @@ package com.crema.creamaspring.controllers;
 
 import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.QuoteRepository;
+import com.crema.creamaspring.scraper.Scraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,13 @@ public class QuoteController {
         return new ResponseEntity<>(quote, HttpStatus.CREATED);
     }
 
+    @PostMapping("/quotes/scrape")
+    public ResponseEntity<String> addScrapedQuotes(){
+        Scraper scraper = new Scraper();
 
+        quoteRepository.saveAll(scraper.retrieveData());
+
+        return new ResponseEntity<>("Detta gick SÅÅÅÅ bra",HttpStatus.CREATED);
+    }
 
 }
