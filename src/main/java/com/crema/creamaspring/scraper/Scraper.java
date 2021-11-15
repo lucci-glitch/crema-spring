@@ -23,11 +23,20 @@ public class Scraper {
             Elements messages = webpage.getElementsByClass("post_message");
 
              for (var element: messages){
-                 quotes.add(new Quote(element.toString()));
+                 String[] citatisar = element.ownText().split("(?<=[.!?])\\s*");
+
+                 for (String citat:citatisar){
+
+                     if(citat.length()>= 3 && !citat.contains("\"\" ")){
+
+                    quotes.add(new Quote(citat));
+                     }
+
+                 }
 
              }
 
-            //System.out.println(quotes);
+            System.out.println(quotes);
         }
 
         catch (HttpStatusException e) {

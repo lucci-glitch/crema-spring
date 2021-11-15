@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @CrossOrigin(origins = "http://localhost:3000") //CORS fix, koppla ihop med react
 @RestController
@@ -27,9 +29,11 @@ public class QuoteController {
     }
 
     @GetMapping("/quotes/find")
-    public ResponseEntity<List<Quote>> findQuotes(@RequestParam String text) {
+    public ResponseEntity<Quote>findQuotes(@RequestParam String text) {
         List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
-        return new ResponseEntity<>(quotes, HttpStatus.OK);
+        int randomNum = ThreadLocalRandom.current().nextInt(0, quotes.size());
+
+        return new ResponseEntity<Quote>(quotes.get(randomNum), HttpStatus.OK);
     }
 
     @PostMapping("/quotes/add") // Map ONLY POST Requests
