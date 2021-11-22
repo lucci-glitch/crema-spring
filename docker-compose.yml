@@ -4,13 +4,13 @@ services:
       image: tomcat:9.0
       #command: bash -c "mv webapps webapps2 && mv webapps.dist/ webapps"
       ports:
-        - 8080:8080
+        - "8080:8080"
 
       volumes:
         # '.tomCatStuff/tomcat-users.xml:/opt/bitnami/tomcat/conf/tomcat-users.xml:rw'
         #- './context.xml:/usr/local/tomcat/conf/Catalina/localhost/manager.xml:rw'
         #- './manager.xml:/usr/local/tomcat/conf/Catalina/localhost/host-manager.xml:rw'
-        - '/Users/rasmusbernestal/IdeaProjects/crema-spring/CreamaLaunchBay:/usr/local/tomcat/webapps/'
+        - './CreamaLaunchBay:/usr/local/tomcat/webapps/'
         #- '.[project_folder_path]:/usr/local/tomcat/webapps/myproject'
   mysqldataBase:
       image: mysql
@@ -31,8 +31,8 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - /Users/rasmusbernestal/IdeaProjects/crema-react/:/home/node/app
+      - '../crema-react:/home/node/app'
     ports:
-      - 3000:3000
+      - "3000:3000"
     command: "npm start"
 
