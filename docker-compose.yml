@@ -23,6 +23,8 @@ services:
         MYSQL_USER: cremauser
         MYSQL_PASSWORD: callme
         MYSQL_DATABASE: db_crema
+      ports:
+        - "3306:3306"
 
   node:
     image: "node:14"

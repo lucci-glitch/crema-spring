@@ -8,7 +8,4 @@ import java.util.List;
 
 public interface QuoteRepository extends JpaRepository<Quote, Integer> {
     List<Quote> findQuotesByTextContaining(String text);
-
-
-
 }
