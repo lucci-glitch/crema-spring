@@ -2,16 +2,14 @@ package com.crema.creamaspring.controllers;
 
 import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.QuoteRepository;
-import com.crema.creamaspring.scraper.Scraper;
+import com.crema.creamaspring.scraper.QuoteScraper;
+import com.crema.creamaspring.scraper.TitleScraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @CrossOrigin(origins = "http://localhost:3000") //CORS fix, koppla ihop med react
@@ -44,11 +42,21 @@ public class QuoteController {
 
     @PostMapping("/quotes/scrape")
     public ResponseEntity<String> addScrapedQuotes(){
-        Scraper scraper = new Scraper();
+        QuoteScraper quoteScraper = new QuoteScraper();
 
-        quoteRepository.saveAll(scraper.retrieveData());
+        quoteRepository.saveAll(quoteScraper.retrieveData());
 
         return new ResponseEntity<>("Detta gick SÅÅÅÅ bra",HttpStatus.CREATED);
     }
 
+    @PostMapping("/quotes/scrape/title")
+    public ResponseEntity<String> addScrapedTitles(){
+        TitleScraper titleScraper = new TitleScraper();
+        titleScraper.retrieveData();
+
+
+        /*quoteRepository.saveAll(quoteScraper.retrieveData());*/
+
+        return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titltar!",HttpStatus.CREATED);
+    }
 }

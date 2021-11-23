@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scraper {
+public class QuoteScraper {
 
     public List<Quote> retrieveData() {
         List<Quote> quotes = new ArrayList<>();
