@@ -1,5 +1,6 @@
 package com.crema.creamaspring.scraper;
 
+import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Quote;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -12,50 +13,29 @@ import java.util.List;
 
 public class TitleScraper {
 
-    public List<Quote> retrieveData() {
-        List<Quote> quotes = new ArrayList<>();
+    public List<ForumThread> retrieveData() {
+        List<ForumThread> forumThreads = new ArrayList<>();
 
         try {
             Document webpage = Jsoup
                     .connect("https://www.flashback.org/f97")
                     .get();
 
-            Elements titles = webpage.getElementsByClass("td_title");
+            Elements threadTitles = webpage.getElementsByClass("td_title").select("[id^=thread_title_]");
 
-            Elements threadTitles = titles.select("[id^=thread_title_]");
-            String text = threadTitles.text();
-            String id = threadTitles.attr("id");
-            System.out.println(threadTitles);
-            System.out.println(text);
-            System.out.println(id);
-
-            /*System.out.println(titles);*/
-
-            for (var element: titles){
-                String[] citatisar = element.ownText().split("(?<=[.!?])\\s*");
-
-                for (String citat:citatisar){
-
-                    if(citat.length()>= 3 && !citat.contains("\"\" ")){
-
-                        quotes.add(new Quote(citat));
-                    }
-
-                }
-
+            for (var thread: threadTitles){
+                String id = thread
+                        .attr("id")
+                        .replaceAll("[^\\d.]", ""); //removes non numerical
+                forumThreads.add(new ForumThread(id, thread.text()));
             }
 
-            System.out.println(quotes);
-        }
-
-        catch (HttpStatusException e) {
-
-        }
-        catch (IOException e) {
+        } catch (HttpStatusException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return quotes;
+        return forumThreads;
     }
 
 }
