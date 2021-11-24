@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ForumThreadRepository extends JpaRepository<ForumThread, Integer> {
     List<ForumThread> findForumThreadById(String id);
+    List<ForumThread> findAll();
 }
