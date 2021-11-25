@@ -4,7 +4,9 @@ import com.crema.creamaspring.models.Quote;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class QuoteScraper {
 
             Elements messages = webpage.getElementsByClass("post_message");
 
-             for (var element: messages){
+             for (Element element: messages){
                  String[] citatisar = element.ownText().split("(?<=[.!?])\\s*");
 
                  for (String citat:citatisar){

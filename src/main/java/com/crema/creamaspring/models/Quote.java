@@ -15,6 +15,8 @@ public class Quote {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String text;
+    // lägga till FK
+    private int post_id;
 
     public Quote(String text) {
         this.text = text;

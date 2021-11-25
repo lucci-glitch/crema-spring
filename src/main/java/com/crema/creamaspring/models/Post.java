@@ -7,14 +7,12 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "posts")
 public class Post {
 
     @Id
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "forumThread_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private ForumThread forumThread;
 
     public Post(int id, ForumThread forumThread) {

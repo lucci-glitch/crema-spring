@@ -7,13 +7,12 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "forumThreads")
 public class ForumThread {
     @Id
     private String id;
     private String text;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "forumThread", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
     public ForumThread(){};

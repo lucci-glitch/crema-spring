@@ -1,8 +1,10 @@
 package com.crema.creamaspring.controllers;
 
 import com.crema.creamaspring.models.ForumThread;
+import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.ForumThreadRepository;
+import com.crema.creamaspring.repositories.PostRepository;
 import com.crema.creamaspring.repositories.QuoteRepository;
 import com.crema.creamaspring.scraper.QuoteScraper;
 import com.crema.creamaspring.scraper.TitleScraper;
@@ -21,6 +23,9 @@ public class QuoteController {
 
     @Autowired
     QuoteRepository quoteRepository;
+
+    @Autowired
+    PostRepository postRepository;
 
     @Autowired
     ForumThreadRepository forumThreadRepository;
@@ -63,8 +68,14 @@ public class QuoteController {
     }
 
     @GetMapping("forumthreads/get")
-    public ResponseEntity<List<ForumThread>> AllForumThreads() {
+    public ResponseEntity<List<ForumThread>> allForumThreads() {
         List<ForumThread> forumThreads = forumThreadRepository.findAll();
         return new ResponseEntity<>(forumThreads, HttpStatus.OK);
+    }
+
+    @GetMapping("posts/get")
+    public ResponseEntity<List<Post>> allPosts() {
+        List<Post> posts = postRepository.findAll();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
