@@ -3,6 +3,7 @@ package com.crema.creamaspring.scraper;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
+import com.crema.creamaspring.repositories.PostRepository;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class QuoteScraper {
 
-    public List<Quote> retrieveData(ForumThread forumThread) {
+    public List<Quote> retrieveData(ForumThread forumThread, PostRepository postRepository) {
         List<Quote> quotesFromForumThread = new ArrayList<>();
 
         try {
@@ -33,12 +34,12 @@ public class QuoteScraper {
                          .replaceAll("[^\\d.]", ""); //removes non numerical
 
                  Post post = new Post(id, forumThread);
-
+                 postRepository.save(post);
 
                  for (String quote : quotes){
 
                      if(quote.length()>= 3 && !quote.contains("\"\" ")){
-                        quotesFromForumThread.add(new Quote(quote, post));
+                        quotesFromForumThread.add(new Quote(quote, post,questionOrStatement(quote)));
                      }
 
                  }
@@ -57,4 +58,16 @@ public class QuoteScraper {
 
         return quotesFromForumThread;
     }
+
+    public String questionOrStatement(String quote){
+        if(quote.contains("?")){
+            return "question";
+        }
+
+
+        return "Statement";
+    }
+
+
+
 }

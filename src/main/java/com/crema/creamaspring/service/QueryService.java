@@ -48,7 +48,7 @@ public class QueryService {
         List<ForumThread> listOForumThreads = forumThreadRepository.findAll();
 
         for (ForumThread forumThread : listOForumThreads) {
-            quoteRepository.saveAll(quoteScraper.retrieveData(forumThread));
+            quoteRepository.saveAll(quoteScraper.retrieveData(forumThread,this.postRepository));
         }
     }
 

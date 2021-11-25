@@ -1,17 +1,24 @@
 package com.crema.creamaspring.scraper;
 
 import com.crema.creamaspring.models.ForumThread;
-import com.crema.creamaspring.models.Quote;
+import com.crema.creamaspring.repositories.ForumThreadRepository;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TitleScraper {
+
+
+
+    public TitleScraper() {
+
+    }
 
     public List<ForumThread> retrieveData() {
         List<ForumThread> forumThreads = new ArrayList<>();
@@ -23,11 +30,15 @@ public class TitleScraper {
 
             Elements threadTitles = webpage.getElementsByClass("td_title").select("[id^=thread_title_]");
 
-            for (var thread: threadTitles){
-                String id = thread
-                        .attr("id")
-                        .replaceAll("[^\\d.]", ""); //removes non numerical
-                forumThreads.add(new ForumThread(id, thread.text()));
+            for (var thread : threadTitles) {
+
+
+                    String id = thread
+                            .attr("id")
+                            .replaceAll("[^\\d.]", ""); //removes non numerical
+                    forumThreads.add(new ForumThread(id, thread.text()));
+
+
             }
 
         } catch (HttpStatusException e) {
@@ -35,7 +46,9 @@ public class TitleScraper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return forumThreads;
     }
+
 
 }
