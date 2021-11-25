@@ -27,14 +27,14 @@ public class QuoteController {
 
     @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> allQuotes() {
-        List<Quote> quotes = (List<Quote>)queryService.allQuotes();
+        List<Quote> quotes = queryService.allQuotes();
         return new ResponseEntity<>(quotes, HttpStatus.OK);
     }
 
     @GetMapping("/quotes/find")
     public ResponseEntity<Quote>findQuotes(@RequestParam String text) {
         Quote quote = queryService.findQuote(text);
-        return new ResponseEntity<Quote>(quote, HttpStatus.OK);
+        return new ResponseEntity<>(quote, HttpStatus.OK);
     }
 
     @PostMapping("/quotes/add") // Map ONLY POST Requests
@@ -45,9 +45,7 @@ public class QuoteController {
 
     @PostMapping("/quotes/scrape")
     public ResponseEntity<String> addScrapedQuotes() {
-        QuoteScraper quoteScraper = new QuoteScraper();
         queryService.scrapeAndPersistQuotes();
-
         return new ResponseEntity<>("Detta gick SÅÅÅÅ bra", HttpStatus.CREATED);
     }
 
@@ -55,17 +53,5 @@ public class QuoteController {
     public ResponseEntity<String> addScrapedTitles() {
         queryService.addScrapedTitles();
         return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titltar!", HttpStatus.CREATED);
-    }
-
-    @GetMapping("forumthreads/get")
-    public ResponseEntity<List<ForumThread>> allForumThreads() {
-        List<ForumThread> forumThreads = queryService.allForumThreads();
-        return new ResponseEntity<>(forumThreads, HttpStatus.OK);
-    }
-
-    @GetMapping("posts/get")
-    public ResponseEntity<List<Post>> allPosts() {
-        List<Post> posts = queryService.allPosts();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
