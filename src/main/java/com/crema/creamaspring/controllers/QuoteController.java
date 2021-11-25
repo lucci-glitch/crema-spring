@@ -8,6 +8,7 @@ import com.crema.creamaspring.repositories.PostRepository;
 import com.crema.creamaspring.repositories.QuoteRepository;
 import com.crema.creamaspring.scraper.QuoteScraper;
 import com.crema.creamaspring.scraper.TitleScraper;
+import com.crema.creamaspring.service.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,60 +23,49 @@ import java.util.concurrent.ThreadLocalRandom;
 public class QuoteController {
 
     @Autowired
-    QuoteRepository quoteRepository;
-
-    @Autowired
-    PostRepository postRepository;
-
-    @Autowired
-    ForumThreadRepository forumThreadRepository;
+    QueryService queryService;
 
     @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> allQuotes() {
-        List<Quote> quotes = (List<Quote>)quoteRepository.findAll();
+        List<Quote> quotes = (List<Quote>)queryService.allQuotes();
         return new ResponseEntity<>(quotes, HttpStatus.OK);
     }
 
     @GetMapping("/quotes/find")
     public ResponseEntity<Quote>findQuotes(@RequestParam String text) {
-        List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
-        int randomNum = ThreadLocalRandom.current().nextInt(0, quotes.size());
-
-        return new ResponseEntity<Quote>(quotes.get(randomNum), HttpStatus.OK);
+        Quote quote = queryService.findQuote(text);
+        return new ResponseEntity<Quote>(quote, HttpStatus.OK);
     }
 
     @PostMapping("/quotes/add") // Map ONLY POST Requests
     public ResponseEntity<Quote> addQuote (@RequestBody Quote quote) {
-        quoteRepository.save(quote);
+        queryService.addQuote(quote);
         return new ResponseEntity<>(quote, HttpStatus.CREATED);
     }
 
     @PostMapping("/quotes/scrape")
-    public ResponseEntity<String> addScrapedQuotes(){
+    public ResponseEntity<String> addScrapedQuotes() {
         QuoteScraper quoteScraper = new QuoteScraper();
+        queryService.scrapeAndPersistQuotes();
 
-        quoteRepository.saveAll(quoteScraper.retrieveData());
-
-        return new ResponseEntity<>("Detta gick SÅÅÅÅ bra",HttpStatus.CREATED);
+        return new ResponseEntity<>("Detta gick SÅÅÅÅ bra", HttpStatus.CREATED);
     }
 
     @PostMapping("/quotes/scrape/title")
-    public ResponseEntity<String> addScrapedTitles(){
-        TitleScraper titleScraper = new TitleScraper();
-        forumThreadRepository.saveAll(titleScraper.retrieveData());
-
-        return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titltar!",HttpStatus.CREATED);
+    public ResponseEntity<String> addScrapedTitles() {
+        queryService.addScrapedTitles();
+        return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titltar!", HttpStatus.CREATED);
     }
 
     @GetMapping("forumthreads/get")
     public ResponseEntity<List<ForumThread>> allForumThreads() {
-        List<ForumThread> forumThreads = forumThreadRepository.findAll();
+        List<ForumThread> forumThreads = queryService.allForumThreads();
         return new ResponseEntity<>(forumThreads, HttpStatus.OK);
     }
 
     @GetMapping("posts/get")
     public ResponseEntity<List<Post>> allPosts() {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = queryService.allPosts();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

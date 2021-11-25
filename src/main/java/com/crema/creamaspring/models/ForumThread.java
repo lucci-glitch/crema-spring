@@ -12,9 +12,6 @@ public class ForumThread {
     private String id;
     private String text;
 
-    @OneToMany(mappedBy = "forumThread", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts;
-
     public ForumThread(){};
 
     public ForumThread(String id, String text) {

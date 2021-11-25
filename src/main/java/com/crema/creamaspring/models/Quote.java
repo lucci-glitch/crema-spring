@@ -2,10 +2,7 @@ package com.crema.creamaspring.models;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -15,11 +12,13 @@ public class Quote {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String text;
-    // lägga till FK
-    private int post_id;
 
-    public Quote(String text) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
+
+    public Quote(String text, Post post) {
         this.text = text;
+        this.post = post;
     }
 
     public Quote() {}

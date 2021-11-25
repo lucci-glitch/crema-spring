@@ -1,5 +1,7 @@
 package com.crema.creamaspring.scraper;
 
+import com.crema.creamaspring.models.ForumThread;
+import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -14,31 +16,36 @@ import java.util.List;
 
 public class QuoteScraper {
 
-    public List<Quote> retrieveData() {
-        List<Quote> quotes = new ArrayList<>();
+    public List<Quote> retrieveData(ForumThread forumThread) {
+        List<Quote> quotesFromForumThread = new ArrayList<>();
 
         try {
             Document webpage = Jsoup
-                    .connect("https://www.flashback.org/t3369257")
+                    .connect("https://www.flashback.org/t" + forumThread.getId())
                     .get();
 
-            Elements messages = webpage.getElementsByClass("post_message");
+            Elements postElements = webpage.getElementsByClass("post_message");
 
-             for (Element element: messages){
-                 String[] citatisar = element.ownText().split("(?<=[.!?])\\s*");
+             for (Element element : postElements) {
+                 String[] quotes = element.ownText().split("(?<=[.!?])\\s*");
+                 String id = element
+                         .attr("id")
+                         .replaceAll("[^\\d.]", ""); //removes non numerical
 
-                 for (String citat:citatisar){
+                 Post post = new Post(id, forumThread);
 
-                     if(citat.length()>= 3 && !citat.contains("\"\" ")){
 
-                    quotes.add(new Quote(citat));
+                 for (String quote : quotes){
+
+                     if(quote.length()>= 3 && !quote.contains("\"\" ")){
+                        quotesFromForumThread.add(new Quote(quote, post));
                      }
 
                  }
 
              }
 
-            System.out.println(quotes);
+            System.out.println(quotesFromForumThread);
         }
 
         catch (HttpStatusException e) {
@@ -48,6 +55,6 @@ public class QuoteScraper {
             e.printStackTrace();
         }
 
-        return quotes;
+        return quotesFromForumThread;
     }
 }

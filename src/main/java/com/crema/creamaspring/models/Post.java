@@ -10,12 +10,12 @@ import java.io.Serializable;
 public class Post {
 
     @Id
-    private Integer id;
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ForumThread forumThread;
 
-    public Post(int id, ForumThread forumThread) {
+    public Post(String id, ForumThread forumThread) {
         this.id = id;
         this.forumThread = forumThread;
     }
