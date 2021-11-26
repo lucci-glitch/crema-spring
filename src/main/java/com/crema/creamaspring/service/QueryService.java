@@ -9,6 +9,8 @@ import com.crema.creamaspring.repositories.QuoteRepository;
 import com.crema.creamaspring.scraper.QuoteScraper;
 import com.crema.creamaspring.scraper.TitleScraper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 

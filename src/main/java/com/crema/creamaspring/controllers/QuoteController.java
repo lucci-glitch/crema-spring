@@ -28,11 +28,15 @@ public class QuoteController {
     @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> allQuotes() {
         List<Quote> quotes = queryService.allQuotes();
+        if (quotes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<>(quotes, HttpStatus.OK);
     }
 
     @GetMapping("/quotes/find")
     public ResponseEntity<Quote>findQuotes(@RequestParam String text) {
+        System.out.println(text);
         Quote quote = queryService.findQuote(text);
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
