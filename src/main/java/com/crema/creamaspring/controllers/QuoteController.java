@@ -1,21 +1,16 @@
 package com.crema.creamaspring.controllers;
-
-import com.crema.creamaspring.models.ForumThread;
-import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
-import com.crema.creamaspring.repositories.ForumThreadRepository;
-import com.crema.creamaspring.repositories.PostRepository;
-import com.crema.creamaspring.repositories.QuoteRepository;
-import com.crema.creamaspring.scraper.QuoteScraper;
-import com.crema.creamaspring.scraper.TitleScraper;
+import com.crema.creamaspring.service.FilterService;
 import com.crema.creamaspring.service.QueryService;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+
 
 @CrossOrigin(origins = "http://localhost:3000") //CORS fix, koppla ihop med react
 @RestController
@@ -24,6 +19,9 @@ public class QuoteController {
 
     @Autowired
     QueryService queryService;
+
+    @Autowired
+    FilterService filterService;
 
     @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> allQuotes() {
@@ -35,9 +33,13 @@ public class QuoteController {
     }
 
     @GetMapping("/quotes/find")
-    public ResponseEntity<Quote>findQuotes(@RequestParam String text) {
-        System.out.println(text);
-        Quote quote = queryService.findQuote(text);
+    public ResponseEntity<Quote>findQuotes(@RequestParam String text) throws JSONException, IOException {
+        String filteredWord = filterService.filterSentence(text);
+        System.out.println("------------------------------------------------");
+        System.out.println("findQuote called on this word: ");
+        System.out.println(filteredWord);
+        System.out.println("------------------------------------------------");
+        Quote quote = queryService.findQuote(filteredWord);
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
 
