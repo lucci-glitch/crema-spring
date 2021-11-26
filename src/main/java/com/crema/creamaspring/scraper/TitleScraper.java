@@ -14,10 +14,7 @@ import java.util.List;
 
 public class TitleScraper {
 
-
-
     public TitleScraper() {
-
     }
 
     public List<ForumThread> retrieveData() {
@@ -32,12 +29,10 @@ public class TitleScraper {
 
             for (var thread : threadTitles) {
 
-
-                    String id = thread
-                            .attr("id")
-                            .replaceAll("[^\\d.]", ""); //removes non numerical
-                    forumThreads.add(new ForumThread(id, thread.text()));
-
+                String id = thread
+                        .attr("id")
+                        .replaceAll("[^\\d.]", ""); //removes non numerical
+                forumThreads.add(new ForumThread(id, thread.text()));
 
             }
 

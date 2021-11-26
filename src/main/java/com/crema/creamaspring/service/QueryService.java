@@ -10,11 +10,12 @@ import com.crema.creamaspring.scraper.QuoteScraper;
 import com.crema.creamaspring.scraper.TitleScraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Component
+@Service
 public class QueryService {
 
     @Autowired
@@ -27,7 +28,7 @@ public class QueryService {
     ForumThreadRepository forumThreadRepository;
 
     public List<Quote> allQuotes() {
-        List<Quote> quotes = (List<Quote>)quoteRepository.findAll();
+        List<Quote> quotes = quoteRepository.findAll();
         return quotes;
     }
 
@@ -57,14 +58,5 @@ public class QueryService {
         forumThreadRepository.saveAll(titleScraper.retrieveData());
     }
 
-    public List<ForumThread> allForumThreads() {
-        List<ForumThread> forumThreads = forumThreadRepository.findAll();
-        return forumThreads;
-    }
-
-    public List<Post> allPosts() {
-        List<Post> posts = postRepository.findAll();
-        return posts;
-    }
 }
 

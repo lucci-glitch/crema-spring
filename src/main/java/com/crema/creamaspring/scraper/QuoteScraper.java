@@ -64,7 +64,6 @@ public class QuoteScraper {
             return "question";
         }
 
-
         return "Statement";
     }
 
