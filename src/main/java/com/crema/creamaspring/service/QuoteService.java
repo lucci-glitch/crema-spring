@@ -35,9 +35,8 @@ public class QuoteService {
         return quotes.get(randomNum);
     }
 
-    public Quote addQuote (Quote quote) {
+    public void addQuote (Quote quote) {
         quoteRepository.save(quote);
-        return quote;
     }
 
     public void scrapeAndPersistQuotes() {
