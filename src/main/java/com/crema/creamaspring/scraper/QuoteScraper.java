@@ -42,7 +42,7 @@ public class QuoteScraper {
                          .attr("id")
                          .replaceAll("[^\\d.]", ""); //removes non numerical
 
-                 Post post = new Post(id, forumThread);
+                 Post post = new Post(id, forumThread, "something");
                  postRepository.save(post);
 
                  for (String quote : quotes){

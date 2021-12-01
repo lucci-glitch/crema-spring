@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -47,11 +48,14 @@ public class PostScraper implements IScraper<Post> {
     @Override
     public void getTextFromElements(Elements postElements, ForumThread forumThread) {
         for (Element element : postElements) {
+            String[] quotes = element.ownText().split("(?<=[.!?])\\s*");
+            String sentence = Arrays.toString(quotes);
+            System.out.println("sentence: " + sentence);
             String postId = element
                     .attr("id")
                     .replaceAll("[^\\d.]", ""); //removes non numerical
 
-            forumPosts.add(new Post(postId, forumThread));
+            forumPosts.add(new Post(postId, forumThread, sentence));
         }
 
 

@@ -60,7 +60,7 @@ public class QuoteScraperImplementation implements IScraper<Quote> {
                     .attr("id")
                     .replaceAll("[^\\d.]", ""); //removes non numerical
 
-            Post post = new Post(id, forumThread);
+            Post post = new Post(id, forumThread, "test");
             postRepository.save(post);
             for (String quote : quotes) {
 
