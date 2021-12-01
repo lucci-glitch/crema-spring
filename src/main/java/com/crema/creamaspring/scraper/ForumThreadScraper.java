@@ -1,20 +1,18 @@
 package com.crema.creamaspring.scraper;
 
 import com.crema.creamaspring.models.ForumThread;
-import com.crema.creamaspring.repositories.ForumThreadRepository;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TitleScraper {
+public class ForumThreadScraper {
 
-    public TitleScraper() {
+    public ForumThreadScraper() {
     }
 
     public List<ForumThread> retrieveData() {

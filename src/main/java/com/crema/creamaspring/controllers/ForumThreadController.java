@@ -5,10 +5,7 @@ import com.crema.creamaspring.service.ForumThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,12 +14,22 @@ import java.util.List;
 @RequestMapping("/api")
 public class ForumThreadController {
 
+    final ForumThreadService forumThreadService;
+
     @Autowired
-    ForumThreadService forumThreadService;
+    public ForumThreadController(ForumThreadService forumThreadService) {
+        this.forumThreadService = forumThreadService;
+    }
 
     @GetMapping("/forumthreads")
     public ResponseEntity<List<ForumThread>> allForumThreads() {
         List<ForumThread> forumThreads = forumThreadService.allForumThreads();
         return new ResponseEntity<>(forumThreads, HttpStatus.OK);
+    }
+
+    @PostMapping("/forumthreads/scrape")
+    public ResponseEntity<String> addScrapedForumThreads() {
+        forumThreadService.addScrapedForumThread();
+        return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titltar!", HttpStatus.CREATED);
     }
 }

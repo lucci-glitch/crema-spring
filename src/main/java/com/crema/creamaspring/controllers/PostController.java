@@ -17,8 +17,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class PostController {
 
+    final PostService postService;
+
     @Autowired
-    PostService postService;
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> allPosts() {
