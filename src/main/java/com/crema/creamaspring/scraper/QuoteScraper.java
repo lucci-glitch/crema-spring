@@ -9,15 +9,24 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class QuoteScraper {
 
-    public List<Quote> retrieveData(ForumThread forumThread, PostRepository postRepository) {
+    final PostRepository postRepository;
+
+    @Autowired
+    public QuoteScraper(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    public List<Quote> retrieveData(ForumThread forumThread) {
         List<Quote> quotesFromForumThread = new ArrayList<>();
 
         try {

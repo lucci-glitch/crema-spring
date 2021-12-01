@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-@Component
 public class FilterService {
     public String filterSentence(String sentence) throws IOException, JSONException {
         URL url = new URL("https://json-tagger.com/tag");
