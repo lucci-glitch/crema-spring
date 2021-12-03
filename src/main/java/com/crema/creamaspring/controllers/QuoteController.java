@@ -1,7 +1,7 @@
 package com.crema.creamaspring.controllers;
 import com.crema.creamaspring.models.Quote;
-import com.crema.creamaspring.service.FilterService;
-import com.crema.creamaspring.service.QuoteService;
+import com.crema.creamaspring.components.filter.Filter;
+import com.crema.creamaspring.services.QuoteService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,17 +18,17 @@ import java.util.List;
 public class QuoteController {
 
     final QuoteService quoteService;
-    final FilterService filterService;
+    final Filter filter;
 
     @Autowired
-    public QuoteController(QuoteService quoteService, FilterService filterService) {
+    public QuoteController(QuoteService quoteService, Filter filter) {
         this.quoteService = quoteService;
-        this.filterService = filterService;
+        this.filter = filter;
     }
 
     @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> allQuotes() {
-        List<Quote> quotes = quoteService.allQuotes();
+        List<Quote> quotes = quoteService.getAll();
         if (quotes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -37,24 +37,14 @@ public class QuoteController {
 
     @GetMapping("/quotes/find")
     public ResponseEntity<Quote>findQuotes(@RequestParam String text) throws JSONException, IOException {
-        String filteredWord = filterService.filterSentence(text);
+        String filteredWord = filter.filterSentence(text);
         System.out.println("------------------------------------------------");
         System.out.println("findQuote called on this word: ");
         System.out.println(filteredWord);
         System.out.println("------------------------------------------------");
-        Quote quote = quoteService.findQuote(filteredWord);
+        Quote quote = quoteService.getRandomMatchingQuote(filteredWord);
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
 
-    @PostMapping("/quotes/add") // Map ONLY POST Requests
-    public ResponseEntity<Quote> addQuote (@RequestBody Quote quote) {
-        quoteService.addQuote(quote);
-        return new ResponseEntity<>(quote, HttpStatus.CREATED);
-    }
 
-    @PostMapping("/quotes/scrape")
-    public ResponseEntity<String> addScrapedQuotes() {
-        quoteService.scrapeAndPersistQuotes();
-        return new ResponseEntity<>("Detta gick SÅÅÅÅ bra", HttpStatus.CREATED);
-    }
 }

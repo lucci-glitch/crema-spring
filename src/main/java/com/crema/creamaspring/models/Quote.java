@@ -15,16 +15,15 @@ public class Quote {
     @Lob
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    @JsonIgnore
-    private Post post;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "post_id", nullable = false)
+//    @JsonIgnore
+//    private Post post;
 
     private String statement;
 
-    public Quote(String text, Post post,String statement) {
+    public Quote(String text, String statement) {
         this.text = text;
-        this.post = post;
         this.statement = statement;
     }
 

@@ -1,26 +1,25 @@
-package com.crema.creamaspring.service;
+package com.crema.creamaspring.components.filter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Service
-public class FilterService {
+@Component
+public class Filter {
+    private final String JSON_TAGGER_URL = "https://json-tagger.com/tag";
+
     public String filterSentence(String sentence) throws IOException, JSONException {
-        URL url = new URL("https://json-tagger.com/tag");
+        URL url = new URL(JSON_TAGGER_URL);
         List<String> nouns = new ArrayList<>();
         String output;
 
@@ -48,7 +47,6 @@ public class FilterService {
                     if (udTags.get("pos_tag").toString().equals("NOUN")) {
                         nouns.add(jsonobject.getString("word_form"));
                     }
-
                 }
             }
         }
