@@ -23,7 +23,7 @@ public class ForumThreadController {
 
     @GetMapping("/forumthreads")
     public ResponseEntity<List<ForumThread>> allForumThreads() {
-        List<ForumThread> forumThreads = forumThreadService.allForumThreads();
+        List<ForumThread> forumThreads = forumThreadService.getAll();
         return new ResponseEntity<>(forumThreads, HttpStatus.OK);
     }
 

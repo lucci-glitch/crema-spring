@@ -14,7 +14,7 @@ public class ForumThreadService {
     @Autowired
     ForumThreadRepository forumThreadRepository;
 
-    public List<ForumThread> allForumThreads() {
+    public List<ForumThread> getAll() {
         List<ForumThread> forumThreads = forumThreadRepository.findAll();
         return forumThreads;
     }
@@ -23,4 +23,5 @@ public class ForumThreadService {
         ForumThreadScraper forumThreadScraper = new ForumThreadScraper();
         forumThreadRepository.saveAll(forumThreadScraper.retrieveData());
     }
+
 }

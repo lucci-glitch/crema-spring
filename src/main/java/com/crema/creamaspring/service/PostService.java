@@ -21,7 +21,7 @@ public class PostService {
         this.postScraper = postScraper;
     }
 
-    public List<Post> allPosts() {
+    public List<Post> getAll() {
         return postRepository.findAll();
     }
 
@@ -37,5 +37,10 @@ public class PostService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void add(Post post) {
+        //TODO: validate post
+        postRepository.save(post);
     }
 }

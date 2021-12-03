@@ -13,7 +13,7 @@ public interface IScraper<T> {
 
     Elements getWebpageElements(Document webPage);
 
-    void getTextFromElements(Elements postElements, ForumThread forumThread);
+    void parseElements(Elements postElements, ForumThread forumThread);
 
 
 

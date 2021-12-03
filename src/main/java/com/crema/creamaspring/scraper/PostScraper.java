@@ -2,6 +2,7 @@ package com.crema.creamaspring.scraper;
 
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
+import com.crema.creamaspring.models.Quote;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -22,16 +22,15 @@ public class PostScraper implements IScraper<Post> {
     public List<Post> retrieveData(ForumThread forumThread) {
         Document document = getWebPage("https://www.flashback.org/t" + forumThread.getId());
         Elements postElements = getWebpageElements(document);
-        getTextFromElements(postElements, forumThread);
+        parseElements(postElements, forumThread);
         return forumPosts;
     }
 
     @Override
     public Document getWebPage(String url) {
         try {
-            Document webpage = Jsoup
+            return Jsoup
                     .connect(url).get();
-            return webpage;
         } catch (HttpStatusException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -46,18 +45,33 @@ public class PostScraper implements IScraper<Post> {
     }
 
     @Override
-    public void getTextFromElements(Elements postElements, ForumThread forumThread) {
+    public void parseElements(Elements postElements, ForumThread forumThread) {
         for (Element element : postElements) {
-            String[] quotes = element.ownText().split("(?<=[.!?])\\s*");
-            String sentence = Arrays.toString(quotes);
-            System.out.println("sentence: " + sentence);
+            String[] sentences = element.ownText().split("(?<=[.!?])\\s*");
+            List<Quote> quotes = new ArrayList<>();
+
             String postId = element
                     .attr("id")
                     .replaceAll("[^\\d.]", ""); //removes non numerical
 
-            forumPosts.add(new Post(postId, forumThread, sentence));
+            for (String sentence : sentences) {
+
+                if (sentence.length() >= 3 && !sentence.contains("\"\" ")) {
+                    quotes.add(new Quote(sentence, questionOrStatement(sentence)));
+                }
+
+            }
+            forumPosts.add(new Post(postId, forumThread, quotes));
         }
 
 
+    }
+
+    public String questionOrStatement(String quote) {
+        if (quote.contains("?")) {
+            return "question";
+        } else {
+            return "statement";
+        }
     }
 }

@@ -28,7 +28,7 @@ public class QuoteController {
 
     @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> allQuotes() {
-        List<Quote> quotes = quoteService.allQuotes();
+        List<Quote> quotes = quoteService.getAll();
         if (quotes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -54,7 +54,7 @@ public class QuoteController {
 
     @PostMapping("/quotes/scrape")
     public ResponseEntity<String> addScrapedQuotes() {
-        quoteService.scrapeAndPersistQuotes();
+//        quoteService.scrapeAndPersistQuotes();
         return new ResponseEntity<>("Detta gick SÅÅÅÅ bra", HttpStatus.CREATED);
     }
 }

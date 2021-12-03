@@ -3,7 +3,6 @@ package com.crema.creamaspring.service;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.QuoteRepository;
-import com.crema.creamaspring.scraper.QuoteScraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +14,14 @@ public class QuoteService {
 
     final QuoteRepository quoteRepository;
     final ForumThreadService forumThreadService;
-    final QuoteScraper quoteScraper;
 
     @Autowired
-    public QuoteService(QuoteRepository quoteRepository, ForumThreadService forumThreadService, QuoteScraper quoteScraper) {
+    public QuoteService(QuoteRepository quoteRepository, ForumThreadService forumThreadService) {
         this.quoteRepository = quoteRepository;
         this.forumThreadService = forumThreadService;
-        this.quoteScraper = quoteScraper;
     }
 
-    public List<Quote> allQuotes() {
+    public List<Quote> getAll() {
         return quoteRepository.findAll();
     }
 
@@ -39,14 +36,14 @@ public class QuoteService {
         quoteRepository.save(quote);
     }
 
-    public void scrapeAndPersistQuotes() {
-
-        List<ForumThread> listOForumThreads = forumThreadService.allForumThreads();
-
-        for (ForumThread forumThread : listOForumThreads) {
-            quoteRepository.saveAll(quoteScraper.retrieveData(forumThread));
-        }
-    }
+//    public void scrapeAndPersistQuotes() {
+//
+//        List<ForumThread> listOForumThreads = forumThreadService.getAll();
+//
+//        for (ForumThread forumThread : listOForumThreads) {
+//            quoteRepository.saveAll(quoteScraper.retrieveData(forumThread));
+//        }
+//    }
 
 }
 
