@@ -1,7 +1,7 @@
 package com.crema.creamaspring.controllers;
 
 import com.crema.creamaspring.models.ForumThread;
-import com.crema.creamaspring.service.ForumThreadService;
+import com.crema.creamaspring.services.ForumThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class ForumThreadController {
 
     @PostMapping("/forumthreads/scrape")
     public ResponseEntity<String> addScrapedForumThreads() {
-        forumThreadService.addScrapedForumThread();
-        return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titltar!", HttpStatus.CREATED);
+        forumThreadService.scrapeAndPersistForumThreads();
+        return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titlar!", HttpStatus.CREATED);
     }
 }

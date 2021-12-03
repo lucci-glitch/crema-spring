@@ -1,4 +1,4 @@
-package com.crema.creamaspring.scraper;
+package com.crema.creamaspring.components.scraper;
 
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PostScraper implements IScraper<Post> {
+public class ContentScraper implements IScraper<Post, ForumThread> {
     List<Post> forumPosts = new ArrayList<>();
 
     @Override
@@ -23,8 +23,10 @@ public class PostScraper implements IScraper<Post> {
         Document document = getWebPage("https://www.flashback.org/t" + forumThread.getId());
         Elements postElements = getWebpageElements(document);
         parseElements(postElements, forumThread);
+
         return forumPosts;
     }
+
 
     @Override
     public Document getWebPage(String url) {
@@ -44,7 +46,7 @@ public class PostScraper implements IScraper<Post> {
         return webPage.getElementsByClass("post_message");
     }
 
-    @Override
+
     public void parseElements(Elements postElements, ForumThread forumThread) {
         for (Element element : postElements) {
             String[] sentences = element.ownText().split("(?<=[.!?])\\s*");
@@ -65,7 +67,10 @@ public class PostScraper implements IScraper<Post> {
         }
 
 
+
+
     }
+
 
     public String questionOrStatement(String quote) {
         if (quote.contains("?")) {
