@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
+@Log4j2
 @RestController
 @RequestMapping("/api")
-@Log4j2
 public class ForumThreadController {
 
     final ForumThreadService forumThreadService;
@@ -25,17 +25,18 @@ public class ForumThreadController {
 
     @GetMapping("/forumthreads")
     public ResponseEntity<List<ForumThread>> allForumThreads() {
-        log.trace("A TRACE Message");
-        log.debug("A DEBUG Message");
-        log.info("An INFO Message");
-        log.warn("A WARN Message");
-        log.error("An ERROR Message");
+        log.info("Getting all forum threads");
         List<ForumThread> forumThreads = forumThreadService.getAll();
+        if (forumThreads.isEmpty()) {
+            log.error("No forum threads");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<>(forumThreads, HttpStatus.OK);
     }
 
     @PostMapping("/forumthreads/scrape")
     public ResponseEntity<String> addScrapedForumThreads() {
+        log.info("Scraping and adding forum threads");
         forumThreadService.scrapeAndPersistForumThreads();
         return new ResponseEntity<>("Detta gick SÅÅÅÅ TITTA alla våra titlar!", HttpStatus.CREATED);
     }
