@@ -45,6 +45,4 @@ public class QuoteController {
         Quote quote = quoteService.getRandomMatchingQuote(filteredWord);
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
-
-
 }

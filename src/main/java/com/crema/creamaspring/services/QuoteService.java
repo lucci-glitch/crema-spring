@@ -2,12 +2,14 @@ package com.crema.creamaspring.services;
 
 import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.QuoteRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Log4j2
 @Service
 public class QuoteService {
 
@@ -23,6 +25,10 @@ public class QuoteService {
     }
 
     public Quote getRandomMatchingQuote(String text) {
+        log.info("Get Random Matching quote from: " + text);
+        if(text == null) {
+        log.error("Text is null");
+        }
         //TODO: validate text
         List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
         int randomNum = ThreadLocalRandom.current().nextInt(0, quotes.size());
