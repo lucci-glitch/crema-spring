@@ -5,6 +5,7 @@ import com.crema.creamaspring.repositories.QuoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,13 +23,29 @@ public class QuoteService {
         return quoteRepository.findAll();
     }
 
-    public Quote getRandomMatchingQuote(String text) {
-        //TODO: validate text
+    public Quote getMatchingQuote(String inputNoun) {
+
+            return getRandomQuote(inputNoun);
+
+
+    }
+
+    public Quote getRandomQuote(String text) {
         List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
         int randomNum = ThreadLocalRandom.current().nextInt(0, quotes.size());
-        //TODO: validate quote
         return quotes.get(randomNum);
     }
+
+    public Quote getDefaultQuote() {
+        List<Quote> defaultQuotes = new ArrayList<>();
+        defaultQuotes.add(new Quote("Ursäkta?", "question"));
+        defaultQuotes.add(new Quote("Jag förstår inte.", "statement"));
+
+        int randomNum = ThreadLocalRandom.current().nextInt(0, defaultQuotes.size());
+        return defaultQuotes.get(randomNum);
+    }
+
+
 
 
 }
