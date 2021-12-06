@@ -24,16 +24,19 @@ public class QuoteService {
     }
 
     public Quote getMatchingQuote(String inputNoun) {
-
-            return getRandomQuote(inputNoun);
-
-
+        return getRandomQuote(inputNoun);
     }
 
     public Quote getRandomQuote(String text) {
         List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
-        int randomNum = ThreadLocalRandom.current().nextInt(0, quotes.size());
-        return quotes.get(randomNum);
+
+        if (quotes.isEmpty()) {
+            //Alternativt throw new QuoteNotFoundException och try/catch i getMatchingQuote()
+            return getDefaultQuote();
+        } else {
+            int randomIndex = ThreadLocalRandom.current().nextInt(0, quotes.size());
+            return quotes.get(randomIndex);
+        }
     }
 
     public Quote getDefaultQuote() {
@@ -44,8 +47,6 @@ public class QuoteService {
         int randomNum = ThreadLocalRandom.current().nextInt(0, defaultQuotes.size());
         return defaultQuotes.get(randomNum);
     }
-
-
 
 
 }
