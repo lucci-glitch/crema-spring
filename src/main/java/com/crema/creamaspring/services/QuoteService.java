@@ -23,16 +23,17 @@ public class QuoteService {
         return quoteRepository.findAll();
     }
 
-    public Quote getMatchingQuote(String inputNoun) {
+    public Quote getMatchingQuote(String inputNoun) throws QuoteNotFoundException {
         return getRandomQuote(inputNoun);
     }
 
-    public Quote getRandomQuote(String text) {
+    public Quote getRandomQuote(String text) throws QuoteNotFoundException {
         List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
 
         if (quotes.isEmpty()) {
             //Alternativt throw new QuoteNotFoundException och try/catch i getMatchingQuote()
-            return getDefaultQuote();
+            //return getDefaultQuote();
+            throw new QuoteNotFoundException();
         } else {
             int randomIndex = ThreadLocalRandom.current().nextInt(0, quotes.size());
             return quotes.get(randomIndex);

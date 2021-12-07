@@ -21,18 +21,10 @@ public class ChatService {
     public Quote getChatResponse(String inputMessage) {
         try {
             return quoteService.getMatchingQuote(filter.filterSentence(inputMessage));
-        } catch (JSONException e) {
+        } catch (JSONException | QuoteNotFoundException e) {
             e.printStackTrace();
             return quoteService.getDefaultQuote();
         }
     }
-//TODO: Kolla att det sköts av JSONTagger genom JSONException
-
-//    public Boolean inputIsValid(String text) {
-//        if (text.length() > 2 && text.matches("[a-zA-Z]+")) {
-//            return true;
-//        } else
-//            return false;
-//    }
 
 }
