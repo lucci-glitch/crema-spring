@@ -1,6 +1,7 @@
 package com.crema.creamaspring.services;
 
 import com.crema.creamaspring.components.filter.Filter;
+import com.crema.creamaspring.components.filter.NoSentenceException;
 import com.crema.creamaspring.models.Quote;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ChatService {
     public Quote getChatResponse(String inputMessage) {
         try {
             return quoteService.getMatchingQuote(filter.filterSentence(inputMessage));
-        } catch (JSONException | QuoteNotFoundException e) {
+        } catch (JSONException | QuoteNotFoundException | NoSentenceException e) {
             e.printStackTrace();
             return quoteService.getDefaultQuote();
         }

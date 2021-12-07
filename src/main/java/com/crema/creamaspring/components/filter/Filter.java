@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Filter {
     private final String JSON_TAGGER_URL = "https://json-tagger.com/tag";
 
-    public String filterSentence(String sentence) throws JSONException {
+    public String filterSentence(String sentence) throws JSONException, NoSentenceException {
         //TODO: dela upp
         try {
             URL url = new URL(JSON_TAGGER_URL);
@@ -69,6 +69,7 @@ public class Filter {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new NoSentenceException();
         }
         return null;
     }
