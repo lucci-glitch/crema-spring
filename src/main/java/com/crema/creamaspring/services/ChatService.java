@@ -3,10 +3,12 @@ package com.crema.creamaspring.services;
 import com.crema.creamaspring.components.filter.Filter;
 import com.crema.creamaspring.components.filter.NoSentenceException;
 import com.crema.creamaspring.models.Quote;
+import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class ChatService {
 

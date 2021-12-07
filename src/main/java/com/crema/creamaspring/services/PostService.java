@@ -3,10 +3,12 @@ package com.crema.creamaspring.services;
 import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.repositories.PostRepository;
 import com.crema.creamaspring.components.scraper.ContentScraper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Log4j2
 @Service
 public class PostService {
     final PostRepository postRepository;
