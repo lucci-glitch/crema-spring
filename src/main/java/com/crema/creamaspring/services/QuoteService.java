@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Log4j2
 @Service
 public class QuoteService {
 
@@ -25,9 +24,7 @@ public class QuoteService {
     }
 
     public Quote getRandomMatchingQuote(String text) {
-        log.info("Get Random Matching quote from: " + text);
         if(text == null) {
-        log.error("Text is null");
         }
         //TODO: validate text
         List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
