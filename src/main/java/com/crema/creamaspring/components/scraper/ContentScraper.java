@@ -23,7 +23,6 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         Document document = getWebPage("https://www.flashback.org/t" + forumThread.getId());
         Elements postElements = getWebpageElements(document);
         parseElements(postElements, forumThread);
-
         return forumPosts;
     }
 
@@ -70,7 +69,6 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
 
 
     }
-
 
     public String questionOrStatement(String quote) {
         if (quote.contains("?")) {

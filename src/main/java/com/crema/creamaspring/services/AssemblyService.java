@@ -25,9 +25,7 @@ public class AssemblyService {
         List<ForumThread> forumThreads = forumThreadService.getAll();
 
         for (ForumThread forumThread : forumThreads) {
-
             List<Post> posts = contentScraper.retrieveData(forumThread);
-
             for (Post post : posts) {
                 postService.add(post);
             }
