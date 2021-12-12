@@ -22,4 +22,9 @@ public class AssemblyController {
         assemblyService.assemblePosts();
         return new ResponseEntity<>("Assembly completed", HttpStatus.OK);
     }
+
+//    @GetMapping("/registration")
+//    public ResponseEntity<String> registration() {
+//        return new ResponseEntity<>("REGISTEREDZZ", HttpStatus.OK);
+//    }
 }
