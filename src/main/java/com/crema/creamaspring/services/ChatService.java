@@ -2,6 +2,7 @@ package com.crema.creamaspring.services;
 
 import com.crema.creamaspring.components.filter.Filter;
 import com.crema.creamaspring.components.filter.NoSentenceException;
+import com.crema.creamaspring.models.EQouteCategory;
 import com.crema.creamaspring.models.Quote;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
@@ -21,9 +22,12 @@ public class ChatService {
         this.quoteService = quoteService;
     }
 
-    public Quote getChatResponse(String inputMessage) {
+    public Quote getChatResponse(String category, String inputMessage) {
+
+        EQouteCategory qouteCategory = EQouteCategory.valueOf(category.toUpperCase());
+
         try {
-            return quoteService.getMatchingQuote(filter.filterSentence(inputMessage));
+            return quoteService.getMatchingQuote(qouteCategory, filter.filterSentence(inputMessage));
         } catch (JSONException | QuoteNotFoundException | NoSentenceException e) {
             e.printStackTrace();
             return quoteService.getDefaultQuote();
