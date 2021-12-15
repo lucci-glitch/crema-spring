@@ -37,9 +37,12 @@ public class QuoteController {
         return new ResponseEntity<>(quotes, HttpStatus.OK);
     }
 
-    @GetMapping("/quotes/find")
-    public ResponseEntity<Quote>findQuotes(@RequestParam String inputMessage) {
-          Quote quote = chatService.getChatResponse(inputMessage);
+
+    // Skall ha in en category
+
+    @GetMapping("/quotes/{category}/find")
+    public ResponseEntity<Quote>findQuotes(@PathVariable("category") String category, @RequestParam String inputMessage) {
+          Quote quote = chatService.getChatResponse(category, inputMessage);
 
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }

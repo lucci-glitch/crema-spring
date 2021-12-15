@@ -1,5 +1,6 @@
 package com.crema.creamaspring.components.scraper;
 
+import com.crema.creamaspring.models.EQouteCategory;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
@@ -56,25 +57,19 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
                     .replaceAll("[^\\d.]", ""); //removes non numerical
 
             for (String sentence : sentences) {
-
                 if (sentence.length() >= 3 && !sentence.contains("\"\" ")) {
                     quotes.add(new Quote(sentence, questionOrStatement(sentence)));
                 }
-
             }
             forumPosts.add(new Post(postId, forumThread, quotes));
         }
-
-
-
-
     }
 
-    public String questionOrStatement(String quote) {
+    public EQouteCategory questionOrStatement(String quote) {
         if (quote.contains("?")) {
-            return "question";
+            return EQouteCategory.QUESTION;
         } else {
-            return "statement";
+            return EQouteCategory.STATEMENT;
         }
     }
 }
