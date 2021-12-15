@@ -31,22 +31,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
     // TODO: obv change crsf().disable() osv osv
     // https://stackoverflow.com/questions/50486314/how-to-solve-403-error-in-spring-boot-post-request
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()// TODO: obv TA BORT
-                .authorizeRequests()
-                .antMatchers("/resources/**", "/registration").permitAll() //TODO: ta bort login här, only for testing
+                .authorizeRequests().antMatchers("http://localhost:3000/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login") // TODO: har detta med något att göra? "/login" borttaget
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .and().formLogin()
+                .loginPage("http://localhost:3000/login").permitAll()
+                .defaultSuccessUrl("http://localhost:3000/admin", true);
 
         //TODO: vi ska klart ha csrf() på, så det ska se ut något liknande detta
 //        http
@@ -90,4 +85,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
+
 }
