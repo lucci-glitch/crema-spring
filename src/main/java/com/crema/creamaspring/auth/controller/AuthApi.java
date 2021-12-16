@@ -3,6 +3,7 @@ package com.crema.creamaspring.auth.controller;
 import com.crema.creamaspring.JwtTokenUtil;
 import com.crema.creamaspring.auth.model.User;
 import com.crema.creamaspring.auth.model.AuthRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-//@Api(tags = "Authentication")
 @RestController
 @RequestMapping(path = "api/auth")
 public class AuthApi {
@@ -26,6 +26,7 @@ public class AuthApi {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
     public AuthApi(AuthenticationManager authenticationManager,
                    JwtTokenUtil jwtTokenUtil) {
         this.authenticationManager = authenticationManager;
