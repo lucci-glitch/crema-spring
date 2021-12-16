@@ -33,18 +33,18 @@ public class UserController {
 
 //    @Autowired
 //    private UserValidator userValidator;
-
-    // TODO: JWT här självklart
-    // testade @Valid men har inte haft så mycket lycka med det
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestParam String user, @Valid @RequestParam String password, @Valid @RequestParam String passwordConfirm) {
-//        if (password.equals("hejhejhej")) {
-//            return new ResponseEntity<>("Detta gick bra du är inloggad", HttpStatus.ACCEPTED);
-//        } else {
-//            return new ResponseEntity<>("YOU SHALL NOT PASS", HttpStatus.UNAUTHORIZED);
-//        }
-        return new ResponseEntity<>("Detta gick bra du är inloggad", HttpStatus.ACCEPTED);
-    }
+//
+//    // TODO: JWT här självklart
+//    // testade @Valid men har inte haft så mycket lycka med det
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@Valid @RequestParam String user, @Valid @RequestParam String password, @Valid @RequestParam String passwordConfirm) {
+////        if (password.equals("hejhejhej")) {
+////            return new ResponseEntity<>("Detta gick bra du är inloggad", HttpStatus.ACCEPTED);
+////        } else {
+////            return new ResponseEntity<>("YOU SHALL NOT PASS", HttpStatus.UNAUTHORIZED);
+////        }
+//        return new ResponseEntity<>("Detta gick bra du är inloggad", HttpStatus.ACCEPTED);
+//    }
 
 
     @PostMapping("/registration")

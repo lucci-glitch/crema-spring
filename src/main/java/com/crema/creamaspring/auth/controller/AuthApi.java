@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 
 //@Api(tags = "Authentication")
 @RestController
-@RequestMapping(path = "api/public")
+@RequestMapping(path = "api/auth")
 public class AuthApi {
 
     private final AuthenticationManager authenticationManager;
@@ -32,7 +33,7 @@ public class AuthApi {
 
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid AuthRequest request) {
         try {
             Authentication authenticate = authenticationManager
@@ -42,12 +43,12 @@ public class AuthApi {
                             )
                     );
 
-            User user = (User) authenticate.getPrincipal();
+            UserDetails user = (UserDetails) authenticate.getPrincipal();
 
             return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,
-                            jwtTokenUtil.generateAccessToken(user)
+                            jwtTokenUtil.generateAccessToken(new User(user.getUsername(), user.getPassword()))
                     )
                     .body(user.getUsername());
         } catch (BadCredentialsException ex) {

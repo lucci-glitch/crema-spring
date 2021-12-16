@@ -77,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/forumthreads").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/forumthreads/scrape").permitAll()
                 .antMatchers(HttpMethod.POST, "/registration").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
 

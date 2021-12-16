@@ -3,6 +3,7 @@ package com.crema.creamaspring.auth.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -17,4 +18,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
+    public String getName() {
+        return name;
+    }
 }
