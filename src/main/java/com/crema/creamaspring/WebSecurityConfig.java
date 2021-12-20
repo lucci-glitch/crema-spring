@@ -76,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Our public endpoints
                 .antMatchers(HttpMethod.GET, "/api/forumthreads").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/forumthreads/scrape").permitAll()
-                .antMatchers(HttpMethod.POST, "/registration").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
