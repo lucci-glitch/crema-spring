@@ -30,8 +30,7 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
     @Override
     public Document getWebPage(String url) {
         try {
-            return Jsoup
-                    .connect(url).get();
+            return Jsoup.connect(url).get();
         } catch (HttpStatusException e) {
             e.printStackTrace();
         } catch (IOException e) {

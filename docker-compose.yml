@@ -9,7 +9,7 @@ services:
       volumes:
         # '.tomCatStuff/tomcat-users.xml:/opt/bitnami/tomcat/conf/tomcat-users.xml:rw'
         #- './context.xml:/usr/local/tomcat/conf/Catalina/localhost/manager.xml:rw'
-        #- './manager.xml:/usr/local/tomcat/conf/Catalina/localhost/host-manager.xml:rw'
+        - './conf/web.xml:/usr/local/tomcat/conf/web.xml'
         - './CreamaLaunchBay:/usr/local/tomcat/webapps/'
         #- '.[project_folder_path]:/usr/local/tomcat/webapps/myproject'
   mysqldataBase:

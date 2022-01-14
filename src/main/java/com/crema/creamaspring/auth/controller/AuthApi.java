@@ -4,6 +4,7 @@ import com.crema.creamaspring.JwtTokenUtil;
 import com.crema.creamaspring.auth.model.User;
 import com.crema.creamaspring.auth.model.AuthRequest;
 import com.crema.creamaspring.auth.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@Log4j2
 @RestController
 @RequestMapping(path = "api/auth")
 public class AuthApi {
@@ -60,8 +61,9 @@ public class AuthApi {
 
     @PostMapping("/signup")
     public ResponseEntity<String> registration(@Valid @RequestParam String username, @Valid @RequestParam String password, @Valid @RequestParam String passwordConfirm) {
-        User registerUser = new User(username, password, passwordConfirm);
 
+        User registerUser = new User(username, password, passwordConfirm);
+        log.info("try to save user ",username);
         //TODO: validation, annoteringar?
 
         userService.save(registerUser);
