@@ -35,6 +35,7 @@ public class UserController {
         //TODO: validation, annoteringar?
 
         userService.save(registerUser);
+
         return new ResponseEntity<>("Detta gick bra du är inloggad", HttpStatus.ACCEPTED);
     }
 

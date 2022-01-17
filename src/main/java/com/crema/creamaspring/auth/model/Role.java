@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -15,8 +16,17 @@ public class Role {
 
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",fetch= FetchType.EAGER)
     private Set<User> users;
+
+    public Role(String name, HashSet<User> users) {
+        this.name = name;
+        this.users = users;
+    }
+
+    public Role() {
+
+    }
 
     public String getName() {
         return name;
