@@ -10,11 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -24,14 +26,16 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
+    @Transactional
     public void createRoles() {
         if(roleRepository.findAll().size() == 0 ){
-        roleRepository.save(new Role("SUPER_ADMIN", new HashSet<>()));
-        roleRepository.save(new Role("SUPER_USER", new HashSet<>()));
+        roleRepository.save(new Role("SUPER_ADMIN"));
+        roleRepository.save(new Role("SUPER_USER"));
         }
     }
 
     @PostConstruct
+    @Transactional
     public void createAdmin() {
         if (userRepository.findByUsername("superAdmin") == null) {
             userRepository.save(new User("superAdmin", "admin1337", "admin1337"));

@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @NotBlank(message = "This field must contain something")
     private String passwordConfirm;
 
-    @ManyToMany(fetch= FetchType.EAGER)
+    @ManyToMany
     private Set<Role> roles = new HashSet<>();
 
     private boolean enabled = true;
