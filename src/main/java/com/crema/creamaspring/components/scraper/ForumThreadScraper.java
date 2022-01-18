@@ -62,7 +62,7 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
                     .replaceAll("[()]","");
 
             if (lastPageText.isEmpty()) {
-                lastPageText = "0";
+                lastPageText = "1";
             }
 
             int lastPage = Integer.parseInt(lastPageText);
