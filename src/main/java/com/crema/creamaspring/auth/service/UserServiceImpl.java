@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void createAdmin() {
         if (userRepository.findByUsername("superAdmin") == null) {
-            userRepository.save(new User("superAdmin", "admin1337", "admin1337"));
+            save(new User("superAdmin", "admin1337", "admin1337"));
 
 
             Set<Role> roles = new HashSet<>();
