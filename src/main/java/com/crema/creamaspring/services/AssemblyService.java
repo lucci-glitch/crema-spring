@@ -13,7 +13,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class AssemblyService {
-    final static long MINTIME = 650;
     final ForumThreadService forumThreadService;
     final PostService postService;
     final ContentScraper contentScraper;
@@ -29,23 +28,9 @@ public class AssemblyService {
         List<ForumThread> forumThreads = forumThreadService.getAll();
 
         for (ForumThread forumThread : forumThreads) {
-            long start = System.currentTimeMillis();
             List<Post> posts = contentScraper.retrieveData(forumThread);
             for (Post post : posts) {
                 postService.add(post);
-            }
-            long end = System.currentTimeMillis();
-            long time = end - start;
-            log.info("Execution lasted: " + time + " ms");
-
-            if (MINTIME > time) {
-                long sleepTime = MINTIME - time;
-                log.info("Sleep in: " + sleepTime + " ms");
-                try {
-                    Thread.sleep(MINTIME - time);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
             posts.clear();
         }

@@ -4,6 +4,7 @@ import com.crema.creamaspring.models.EQouteCategory;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,16 +16,51 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class ContentScraper implements IScraper<Post, ForumThread> {
+    private static final int MAXPAGES = 2;
+    private static final long MINTIME = 650;
+    private static final String BASEURL = "https://www.flashback.org/t";
     List<Post> forumPosts = new ArrayList<>();
 
     @Override
     public List<Post> retrieveData(ForumThread forumThread) {
-        Document document = getWebPage("https://www.flashback.org/t" + forumThread.getId());
-        Elements postElements = getWebpageElements(document);
-        parseElements(postElements, forumThread);
-        return forumPosts;
+        List<Post> pageableForumPosts = new ArrayList<>();
+        int pages = forumThread.getLastPage();
+
+        if (pages > MAXPAGES) {
+            pages = MAXPAGES;
+        }
+
+        for (int i = 1; i <= pages; i++) {
+            long start = System.currentTimeMillis();
+            String url = BASEURL + forumThread.getId();
+
+            if (i >= 2) {
+                url = url + "p" + i;
+            }
+
+            Document document = getWebPage(url);
+            Elements postElements = getWebpageElements(document);
+            parseElements(postElements, forumThread);
+            pageableForumPosts.addAll(forumPosts);
+            long end = System.currentTimeMillis();
+            long time = end - start;
+            log.info("Execution lasted: " + time + " ms");
+
+            if (MINTIME > time) {
+                long sleepTime = MINTIME - time;
+                log.info("Sleep in: " + sleepTime + " ms");
+                try {
+                    Thread.sleep(MINTIME - time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        forumPosts.clear();
+        return pageableForumPosts;
     }
 
 
