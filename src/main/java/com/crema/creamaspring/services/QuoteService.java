@@ -1,5 +1,6 @@
 package com.crema.creamaspring.services;
 
+import com.crema.creamaspring.models.EQouteCategory;
 import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.QuoteRepository;
 import lombok.extern.log4j.Log4j2;
@@ -25,12 +26,14 @@ public class QuoteService {
         return quoteRepository.findAll();
     }
 
-    public Quote getMatchingQuote(String inputNoun) throws QuoteNotFoundException {
-        return getRandomQuote(inputNoun);
+    public Quote getMatchingQuote(EQouteCategory category, String inputNoun) throws QuoteNotFoundException {
+        return getRandomQuote(category, inputNoun);
     }
 
-    public Quote getRandomQuote(String text) throws QuoteNotFoundException {
-        List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
+    public Quote getRandomQuote(EQouteCategory category, String text) throws QuoteNotFoundException {
+
+        //List<Quote> quotes = quoteRepository.findQuotesByTextContaining(text);
+        List<Quote> quotes = quoteRepository.findQuotesByCategoryEqualsAndTextContaining(category, text);
 
         if (quotes.isEmpty()) {
             //Alternativt throw new QuoteNotFoundException och try/catch i getMatchingQuote()
@@ -44,8 +47,8 @@ public class QuoteService {
 
     public Quote getDefaultQuote() {
         List<Quote> defaultQuotes = new ArrayList<>();
-        defaultQuotes.add(new Quote("Ursäkta?", "question"));
-        defaultQuotes.add(new Quote("Jag förstår inte.", "statement"));
+        defaultQuotes.add(new Quote("Ursäkta?", EQouteCategory.QUESTION));
+        defaultQuotes.add(new Quote("Jag förstår inte.", EQouteCategory.STATEMENT));
 
         int randomNum = ThreadLocalRandom.current().nextInt(0, defaultQuotes.size());
         return defaultQuotes.get(randomNum);
