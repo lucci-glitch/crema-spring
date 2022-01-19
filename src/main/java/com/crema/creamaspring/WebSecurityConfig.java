@@ -107,9 +107,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
-        config.setAllowedHeaders(Arrays.asList("X-Requested-With","X-Auth-Token","Content-Type","Content-Length","Authorization"));
+        config.setAllowedHeaders(Arrays.asList("X-Requested-With","X-Auth-Token","Content-Type","Content-Length","Authorization", "Access-Control-Expose-Headers"));
         config.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"));
-
+        config.addExposedHeader("Authorization");
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
