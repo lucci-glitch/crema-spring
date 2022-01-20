@@ -16,27 +16,28 @@ public class ChatService {
 
     private final Filter filter;
     private final QuoteService quoteService;
-    private final Tree tree;
+    private Tree tree = new Tree();
 
     @Autowired
-    public ChatService(Filter filter, QuoteService quoteService, Tree tree) {
+    public ChatService(Filter filter, QuoteService quoteService) {
         this.filter = filter;
         this.quoteService = quoteService;
-        this.tree = tree;
     }
 
     public String chatQuestions(String response) {
         tree.proceed(response);
 
         if (tree.checkIfNull()) {
-            return getFinalResponse();
+            String finalResponse = getFinalResponse();
+            this.tree = new Tree();
+            return finalResponse;
         }
 
-        return tree.getCurrentNode().getName();
+        return tree.getCurrentNode().getData();
     }
 
     public String getFinalResponse() {
-        return "(Quote)";
+        return quoteService.getContainingQuote(tree.getJournal()).getText();
     }
 
 

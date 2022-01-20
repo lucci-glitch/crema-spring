@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@Component
 public class Tree {
     private TreeNode<String> currentNode;
     private List<String> journal;
@@ -20,6 +19,7 @@ public class Tree {
         this.map = SampleData.createTreeMap();
     }
 
+    // java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
     public void proceed(String answer) {
 
         if(answer.equalsIgnoreCase("ja")) {

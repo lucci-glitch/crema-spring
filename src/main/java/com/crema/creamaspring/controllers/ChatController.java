@@ -28,15 +28,11 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public ResponseEntity<List<Quote>> allQuotes(@RequestParam String response) {
-        log.info("Getting all quotes");
-        List<Quote> quotes = quoteService.getAll();
-        if (quotes.isEmpty()) {
-            log.error("No quotes");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(quotes, HttpStatus.OK);
+    public ResponseEntity<String> allQuotes(@RequestParam String response) {
+        return new ResponseEntity<>(chatService.chatQuestions(response), HttpStatus.OK);
     }
+
+
 
 
 

@@ -54,6 +54,14 @@ public class QuoteService {
         return defaultQuotes.get(randomNum);
     }
 
+    public Quote getContainingQuote(List<String> list) {
+        int randomNum = ThreadLocalRandom.current().nextInt(0, list.size());
+        String string = list.get(randomNum);
+        List<Quote> quotes = quoteRepository.findQuotesByTextContaining(string);
+        int randomQoute = ThreadLocalRandom.current().nextInt(0, quotes.size());
+        return quotes.get(randomQoute);
+    }
+
 
 }
 

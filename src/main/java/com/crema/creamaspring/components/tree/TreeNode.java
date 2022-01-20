@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@Component
 public class TreeNode<T> {
     private String name;
     public T data;
