@@ -37,7 +37,8 @@ public class ChatService {
     }
 
     public String getFinalResponse() {
-        return quoteService.getContainingQuote(tree.getJournal()).getText();
+        //return quoteService.getContainingQuote(tree.getJournal()).getText();
+        return "Final response";
     }
 
 
