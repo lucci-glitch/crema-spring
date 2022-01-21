@@ -28,8 +28,13 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public ResponseEntity<String> allQuotes(@RequestParam String response) {
+    public ResponseEntity<String> chatTree(@RequestParam String response) {
         return new ResponseEntity<>(chatService.chatQuestions(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/chat/first")
+    public ResponseEntity<String> firstResponse(@RequestParam String response) {
+        return new ResponseEntity<>(chatService.firstResponse(response), HttpStatus.OK);
     }
 
 

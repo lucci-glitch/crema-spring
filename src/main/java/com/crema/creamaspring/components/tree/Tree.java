@@ -40,6 +40,11 @@ public class Tree {
         }
     }
 
+    public void addToJournal(String value) {
+        System.out.println(value);
+        journal.add(value);
+    }
+
     public boolean checkIfNull() {
         if(this.currentNode.isLeaf()) {
             System.out.println("Sending list: ");

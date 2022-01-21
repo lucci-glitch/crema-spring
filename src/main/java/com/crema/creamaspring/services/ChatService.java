@@ -56,4 +56,14 @@ public class ChatService {
         }
     }
 
+    public String firstResponse(String response) {
+
+        try {
+            tree.addToJournal(filter.filterSentence(response));
+        } catch (JSONException | NoSentenceException e) {
+            e.printStackTrace();
+        }
+        return tree.getCurrentNode().getData();
+    }
+
 }
