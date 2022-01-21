@@ -45,6 +45,7 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
             Elements postElements = getWebpageElements(document);
             parseElements(postElements, forumThread);
             pageableForumPosts.addAll(forumPosts);
+
             long end = System.currentTimeMillis();
             long time = end - start;
             log.info("Execution lasted: " + time + " ms");
