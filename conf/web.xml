@@ -539,7 +539,7 @@
         <url-pattern>/api/**</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
+<!--
     <filter>
         <filter-name>requestdumper</filter-name>
         <filter-class>
@@ -550,6 +550,8 @@
         <filter-name>requestdumper</filter-name>
         <url-pattern>*</url-pattern>
     </filter-mapping>
+     -->
+
     <!-- A filter that sets character encoding that is used to decode -->
     <!-- parameters in a POST request -->
     <!--

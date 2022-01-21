@@ -21,12 +21,12 @@ public class SampleData {
             {
                 TreeNode<String> node10 = node1.addChild("node10","Känner du yrsel?");
                 {
-                    TreeNode<String> node100 = node1.addChild("node100", "Kräkningar?");
+                    TreeNode<String> node100 = node10.addChild("node100", "Kräkningar?");
                     {
                         TreeNode<String> node1000 = node100.addChild("node1000", null);
                         TreeNode<String> node1001 = node100.addChild("node1001", null);
                     }
-                    TreeNode<String> node101 = node1.addChild("node101",null);
+                    TreeNode<String> node101 = node10.addChild("node101",null);
                 }
                 TreeNode<String> node11 = node1.addChild("node11", null);
             }
