@@ -21,6 +21,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Filter {
     private final String JSON_TAGGER_URL = "https://json-tagger.com/tag";
 
+    /** A filter that filters out all nouns of a sentence then returns a random noun as a String.
+     *
+     * @param sentence takes a String (sentence) as parameter.
+     * @return a random String (noun) from all found nouns in the sentence. If no nouns where found it
+     * returns a empty String. If it catches any Exeptions, null is returned.
+     * @throws JSONException
+     * @throws NoSentenceException when it catches IOExecption.
+     */
+
     public String filterSentence(String sentence) throws JSONException, NoSentenceException {
         //TODO: dela upp
         try {

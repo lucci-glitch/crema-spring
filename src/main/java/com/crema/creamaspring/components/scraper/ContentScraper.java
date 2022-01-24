@@ -24,6 +24,13 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
     private static final String BASEURL = "https://www.flashback.org/t";
 //    List<Post> forumPosts = new ArrayList<>();
 
+
+    /** Scrapes qoutes and posts from a forum thread on flashback.org.
+     *
+     * @param forumThread Takes a forum thread as a parameter.
+     * @return a list of posts.
+     */
+
     @Override
     public List<Post> retrieveData(ForumThread forumThread) {
         List<Post> pageableForumPosts = new ArrayList<>();
@@ -63,6 +70,11 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         return pageableForumPosts;
     }
 
+    /** Connects to a webpage based on String (URL).
+     *
+     * @param url Takes a String (Url) as a parameter.
+     * @return returns a HTML Document.
+     */
 
     @Override
     public Document getWebPage(String url) {
@@ -76,11 +88,23 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         return null;
     }
 
+    /** Finds node elements by class name "post_message" in a HTML Document (Webpage)
+     *
+     * @param webPage Takes a Document (Webpage) as a parameter.
+     * @return returns List of Elements.
+     */
+
     @Override
     public Elements getWebpageElements(Document webPage) {
         return webPage.getElementsByClass("post_message");
     }
 
+    /** Parses the list of elements to a Post.
+     *
+     * @param postElements Takes a list of elements as the first parameter.
+     * @param forumThread Takes a forumThread as the second.
+     * @return returns a List of post after the elements been parsed.
+     */
 
     public List<Post> parseElements(Elements postElements, ForumThread forumThread) {
         List<Post> posts = new ArrayList<>();
@@ -103,6 +127,11 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         return posts;
     }
 
+    /** Determine if a Qoute is a question or a statement.
+     *
+     * @param quote Takes a String (qoute) as the paramenter.
+     * @return Returns a Enum (EQouteCategory) based of the ending of the String.
+     */
     public EQouteCategory questionOrStatement(String quote) {
         if (quote.contains("?")) {
             return EQouteCategory.QUESTION;

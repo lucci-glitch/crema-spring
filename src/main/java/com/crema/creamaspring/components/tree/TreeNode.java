@@ -22,9 +22,19 @@ public class TreeNode<T> {
         this.elementsIndex.add(this);
     }
 
+    /** Check if the TreeNode is the root of the tree by checking if it has a parent.
+     *
+     * @return True if the Tree node is root node else False.
+     */
+
     public boolean isRoot() {
         return parent == null;
     }
+
+    /** Check if the TreeNode is the leaf of the tree by checking if it has any childs.
+     *
+     * @return True if the Tree node is leaf node else False.
+     */
 
     public boolean isLeaf() {
         return children.size() == 0;
@@ -32,9 +42,14 @@ public class TreeNode<T> {
 
     private List<TreeNode<T>> elementsIndex;
 
-
-    public TreeNode<T> addChild(String name, T child) {
-        TreeNode<T> childNode = new TreeNode<T>(name, child);
+    /** Adds a child TreeNode to a parent ThreeNode.
+     *
+     * @param name Takes a String as the name for the TreeNode.
+     * @param data Takes a generic Type as the data for the node.
+     * @return a TreeNode as a child to a parent Node.
+     */
+    public TreeNode<T> addChild(String name, T data) {
+        TreeNode<T> childNode = new TreeNode<T>(name, data);
         childNode.parent = this;
         this.children.add(childNode);
         // this.registerChildForSearch(childNode);

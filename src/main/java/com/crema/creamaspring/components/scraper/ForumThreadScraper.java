@@ -17,6 +17,11 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
     //TODO: abstrakt klass med lista som attribute
     List<ForumThread> forumThreads = new ArrayList<>();
 
+    /** Scrapes forum threads from flashback.org based on forum collection url.
+     *
+     * @param source Takes a forum collection url ex. f97 as a parameter.
+     * @return a list of forum threads.
+     */
     @Override
     public List<ForumThread> retrieveData(String source) {
         Document document = getWebPage("https://www.flashback.org/" + source);
@@ -25,12 +30,17 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
         return forumThreads;
     }
 
+    /** Connects to a webpage based on String (URL).
+     *
+     * @param url Takes a String (Url) as a parameter.
+     * @return returns a HTML Document.
+     */
 
     @Override
     public Document getWebPage(String url) {
         try {
             return Jsoup
-                    .connect("https://www.flashback.org/f97")
+                    .connect(url)
                     .get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,12 +48,22 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
         return null;
     }
 
+    /** Finds node elements by class name "td_title" in a HTML Document (Webpage)
+     *
+     * @param webPage Takes a Document (Webpage) as a parameter.
+     * @return returns List of Elements.
+     */
+
     @Override
     public Elements getWebpageElements(Document webPage) {
         //return webPage.getElementsByClass("td_title").select("[id^=thread_title_]");
         return webPage.getElementsByClass("td_title");
     }
 
+    /** Parses the list of elements to a ForumThread.
+     *
+     * @param postElements Takes a list of elements as the first parameter.
+     */
     public void parseElements(Elements postElements) {
         for (var element : postElements) {
 
