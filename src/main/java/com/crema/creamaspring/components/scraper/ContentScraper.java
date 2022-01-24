@@ -22,7 +22,7 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
     private static final int MAXPAGES = 2;
     private static final long MINTIME = 650;
     private static final String BASEURL = "https://www.flashback.org/t";
-    List<Post> forumPosts = new ArrayList<>();
+//    List<Post> forumPosts = new ArrayList<>();
 
     @Override
     public List<Post> retrieveData(ForumThread forumThread) {
@@ -34,6 +34,7 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         }
 
         for (int i = 1; i <= pages; i++) {
+//            forumPosts.clear();
             long start = System.currentTimeMillis();
             String url = BASEURL + forumThread.getId();
 
@@ -42,9 +43,9 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
             }
 
             Document document = getWebPage(url);
+            log.info("content scraper url: " + url);
             Elements postElements = getWebpageElements(document);
-            parseElements(postElements, forumThread);
-            pageableForumPosts.addAll(forumPosts);
+            pageableForumPosts.addAll(parseElements(postElements, forumThread));
             long end = System.currentTimeMillis();
             long time = end - start;
             log.info("Execution lasted: " + time + " ms");
@@ -59,7 +60,6 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
                 }
             }
         }
-        forumPosts.clear();
         return pageableForumPosts;
     }
 
@@ -82,7 +82,9 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
     }
 
 
-    public void parseElements(Elements postElements, ForumThread forumThread) {
+    public List<Post> parseElements(Elements postElements, ForumThread forumThread) {
+        List<Post> posts = new ArrayList<>();
+
         for (Element element : postElements) {
             String[] sentences = element.ownText().split("(?<=[.!?])\\s*");
             List<Quote> quotes = new ArrayList<>();
@@ -96,8 +98,9 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
                     quotes.add(new Quote(sentence, questionOrStatement(sentence)));
                 }
             }
-            forumPosts.add(new Post(postId, forumThread, quotes));
+            posts.add(new Post(postId, forumThread, quotes));
         }
+        return posts;
     }
 
     public EQouteCategory questionOrStatement(String quote) {

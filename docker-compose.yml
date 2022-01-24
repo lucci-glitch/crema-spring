@@ -23,8 +23,8 @@ services:
         MYSQL_USER: cremauser
         MYSQL_PASSWORD: callme
         MYSQL_DATABASE: db_crema
-      volumes:
-        - "./datadir:/var/lib/mysql"
+#      volumes:
+#        - "./datadir:/var/lib/mysql"
       ports:
         - "3306:3306"
 
