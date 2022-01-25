@@ -1,6 +1,6 @@
 package com.crema.creamaspring.controllers;
 import com.crema.creamaspring.models.Quote;
-import com.crema.creamaspring.components.filter.Filter;
+import com.crema.creamaspring.services.ChatService;
 import com.crema.creamaspring.services.QuoteService;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 import java.util.List;
 
 
@@ -20,12 +18,12 @@ import java.util.List;
 public class QuoteController {
 
     final QuoteService quoteService;
-    final Filter filter;
+    final ChatService chatService;
 
     @Autowired
-    public QuoteController(QuoteService quoteService, Filter filter) {
+    public QuoteController(QuoteService quoteService, ChatService chatService) {
         this.quoteService = quoteService;
-        this.filter = filter;
+        this.chatService = chatService;
     }
 
     @GetMapping("/quotes")
@@ -39,11 +37,13 @@ public class QuoteController {
         return new ResponseEntity<>(quotes, HttpStatus.OK);
     }
 
-    @GetMapping("/quotes/find")
-    public ResponseEntity<Quote>findQuotes(@RequestParam String text) throws JSONException, IOException {
-        String filteredWord = filter.filterSentence(text);
-        log.info("findQuote called on this word");
-        Quote quote = quoteService.getRandomMatchingQuote(filteredWord);
+
+    // Skall ha in en category
+
+    @GetMapping("/quotes/{category}/find")
+    public ResponseEntity<Quote>findQuotes(@PathVariable("category") String category, @RequestParam String inputMessage) {
+          Quote quote = chatService.getChatResponse(category, inputMessage);
+
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
 }

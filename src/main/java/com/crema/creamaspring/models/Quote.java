@@ -1,6 +1,5 @@
 package com.crema.creamaspring.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,11 +19,11 @@ public class Quote {
 //    @JsonIgnore
 //    private Post post;
 
-    private String statement;
+    private EQouteCategory category;
 
-    public Quote(String text, String statement) {
+    public Quote(String text, EQouteCategory category) {
         this.text = text;
-        this.statement = statement;
+        this.category = category;
     }
 
     public Quote() {}

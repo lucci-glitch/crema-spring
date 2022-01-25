@@ -3,10 +3,13 @@ package com.crema.creamaspring.services;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.repositories.ForumThreadRepository;
 import com.crema.creamaspring.components.scraper.ForumThreadScraper;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class ForumThreadService {
 

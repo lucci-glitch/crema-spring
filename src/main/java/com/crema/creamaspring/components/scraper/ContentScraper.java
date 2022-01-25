@@ -1,8 +1,10 @@
 package com.crema.creamaspring.components.scraper;
 
+import com.crema.creamaspring.models.EQouteCategory;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,25 +16,58 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class ContentScraper implements IScraper<Post, ForumThread> {
-    List<Post> forumPosts = new ArrayList<>();
+    private static final int MAXPAGES = 2;
+    private static final long MINTIME = 650;
+    private static final String BASEURL = "https://www.flashback.org/t";
+//    List<Post> forumPosts = new ArrayList<>();
 
     @Override
     public List<Post> retrieveData(ForumThread forumThread) {
-        Document document = getWebPage("https://www.flashback.org/t" + forumThread.getId());
-        Elements postElements = getWebpageElements(document);
-        parseElements(postElements, forumThread);
+        List<Post> pageableForumPosts = new ArrayList<>();
+        int pages = forumThread.getLastPage();
 
-        return forumPosts;
+        if (pages > MAXPAGES) {
+            pages = MAXPAGES;
+        }
+
+        for (int i = 1; i <= pages; i++) {
+//            forumPosts.clear();
+            long start = System.currentTimeMillis();
+            String url = BASEURL + forumThread.getId();
+
+            if (i >= 2) {
+                url = url + "p" + i;
+            }
+
+            Document document = getWebPage(url);
+            log.info("content scraper url: " + url);
+            Elements postElements = getWebpageElements(document);
+            pageableForumPosts.addAll(parseElements(postElements, forumThread));
+            long end = System.currentTimeMillis();
+            long time = end - start;
+            log.info("Execution lasted: " + time + " ms");
+
+            if (MINTIME > time) {
+                long sleepTime = MINTIME - time;
+                log.info("Sleep in: " + sleepTime + " ms");
+                try {
+                    Thread.sleep(MINTIME - time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return pageableForumPosts;
     }
 
 
     @Override
     public Document getWebPage(String url) {
         try {
-            return Jsoup
-                    .connect(url).get();
+            return Jsoup.connect(url).get();
         } catch (HttpStatusException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -47,7 +82,9 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
     }
 
 
-    public void parseElements(Elements postElements, ForumThread forumThread) {
+    public List<Post> parseElements(Elements postElements, ForumThread forumThread) {
+        List<Post> posts = new ArrayList<>();
+
         for (Element element : postElements) {
             String[] sentences = element.ownText().split("(?<=[.!?])\\s*");
             List<Quote> quotes = new ArrayList<>();
@@ -57,26 +94,20 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
                     .replaceAll("[^\\d.]", ""); //removes non numerical
 
             for (String sentence : sentences) {
-
                 if (sentence.length() >= 3 && !sentence.contains("\"\" ")) {
                     quotes.add(new Quote(sentence, questionOrStatement(sentence)));
                 }
-
             }
-            forumPosts.add(new Post(postId, forumThread, quotes));
+            posts.add(new Post(postId, forumThread, quotes));
         }
-
-
-
-
+        return posts;
     }
 
-
-    public String questionOrStatement(String quote) {
+    public EQouteCategory questionOrStatement(String quote) {
         if (quote.contains("?")) {
-            return "question";
+            return EQouteCategory.QUESTION;
         } else {
-            return "statement";
+            return EQouteCategory.STATEMENT;
         }
     }
 }
