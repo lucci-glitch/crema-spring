@@ -11,16 +11,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Scrapes forum threads from flashback.org based on forum collection url.
+ *
+ */
+
 @Slf4j
 @Component
 public class ForumThreadScraper implements IScraper<ForumThread, String> {
     //TODO: abstrakt klass med lista som attribute
     List<ForumThread> forumThreads = new ArrayList<>();
 
-    /** Scrapes forum threads from flashback.org based on forum collection url.
+    /** Retrieves a list of post from a forum thread.
      *
-     * @param source Takes a forum collection url ex. f97 as a parameter.
-     * @return a list of forum threads.
+     * @param source - a source (url) with is scraped.
+     * @return - a list of forum threads.
      */
     @Override
     public List<ForumThread> retrieveData(String source) {
@@ -32,8 +36,8 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
 
     /** Connects to a webpage based on String (URL).
      *
-     * @param url Takes a String (Url) as a parameter.
-     * @return returns a HTML Document.
+     * @param url - url to be connect to.
+     * @return - returns a HTML Document.
      */
 
     @Override
@@ -50,8 +54,8 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
 
     /** Finds node elements by class name "td_title" in a HTML Document (Webpage)
      *
-     * @param webPage Takes a Document (Webpage) as a parameter.
-     * @return returns List of Elements.
+     * @param webPage - a HTML Document to be inspected.
+     * @return - returns list of Elements.
      */
 
     @Override
@@ -62,10 +66,10 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
 
     /** Parses the list of elements to a ForumThread.
      *
-     * @param postElements Takes a list of elements as the first parameter.
+     * @param pageElements - a list of elements to be parsed.
      */
-    public void parseElements(Elements postElements) {
-        for (var element : postElements) {
+    public void parseElements(Elements pageElements) {
+        for (var element : pageElements) {
 
             String id = element
                     .select("[id^=thread_title_]")

@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Scrapes qoutes and posts from a forum thread on flashback.org.
+ *
+ */
+
 @Slf4j
 @Component
 public class ContentScraper implements IScraper<Post, ForumThread> {
@@ -25,10 +29,10 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
 //    List<Post> forumPosts = new ArrayList<>();
 
 
-    /** Scrapes qoutes and posts from a forum thread on flashback.org.
+    /** Retrieves a list of post from a forum thread.
      *
-     * @param forumThread Takes a forum thread as a parameter.
-     * @return a list of posts.
+     * @param forumThread - forum thread with is scraped.
+     * @return - a list of posts.
      */
 
     @Override
@@ -72,8 +76,8 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
 
     /** Connects to a webpage based on String (URL).
      *
-     * @param url Takes a String (Url) as a parameter.
-     * @return returns a HTML Document.
+     * @param url - url to be connect to.
+     * @return - returns a HTML Document.
      */
 
     @Override
@@ -90,8 +94,8 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
 
     /** Finds node elements by class name "post_message" in a HTML Document (Webpage)
      *
-     * @param webPage Takes a Document (Webpage) as a parameter.
-     * @return returns List of Elements.
+     * @param webPage - a HTML Document to be inspected.
+     * @return - returns list of Elements.
      */
 
     @Override
@@ -101,9 +105,9 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
 
     /** Parses the list of elements to a Post.
      *
-     * @param postElements Takes a list of elements as the first parameter.
-     * @param forumThread Takes a forumThread as the second.
-     * @return returns a List of post after the elements been parsed.
+     * @param postElements - a list of elements to be parsed.
+     * @param forumThread - a forum thread for post reference.
+     * @return - returns a list of post after the elements been parsed.
      */
 
     public List<Post> parseElements(Elements postElements, ForumThread forumThread) {
@@ -129,8 +133,8 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
 
     /** Determine if a Qoute is a question or a statement.
      *
-     * @param quote Takes a String (qoute) as the paramenter.
-     * @return Returns a Enum (EQouteCategory) based of the ending of the String.
+     * @param quote - a qoute to be evaluated.
+     * @return - returns a Enum (EQouteCategory) based of the ending of the String.
      */
     public EQouteCategory questionOrStatement(String quote) {
         if (quote.contains("?")) {

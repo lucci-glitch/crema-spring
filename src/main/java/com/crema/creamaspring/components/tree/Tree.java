@@ -19,9 +19,9 @@ public class Tree {
         this.map = SampleData.createTreeMap();
     }
 
-    /** Advances down the Binary Tree based on answer.
+    /** Advances down in proper sequence the Binary Tree based on answer.
      *
-     * @param answer Takes a String (answer) as a parameter.
+     * @param answer - a answer to be evaluate.
      */
     // java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
     public void proceed(String answer) {
