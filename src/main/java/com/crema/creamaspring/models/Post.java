@@ -34,4 +34,14 @@ public class Post {
 
     public Post() {}
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id='" + id + '\'' +
+                ", forumThread=" + forumThread +
+                ", quotes=" + quotes +
+                '}';
+    }
 }
+
+
