@@ -4,18 +4,20 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Data
 public class Tree {
     private TreeNode<String> currentNode;
-    private List<String> journal;
+    // private List<String> journal;
+    private Map<String, Boolean> journal;
     private Map<String, String> map;
 
     public Tree() {
         this.currentNode = SampleData.buildTree();
-        this.journal = new ArrayList<>();
+        this.journal = new HashMap<>();
         this.map = SampleData.createTreeMap();
     }
 
@@ -24,29 +26,31 @@ public class Tree {
 
         if(answer.equalsIgnoreCase("ja")) {
             this.currentNode = this.currentNode.getChildren().get(0);
-            addValueToJournal();
+            addMappingToJournal(true);
         }
-        else{
+        else {
             this.currentNode = this.currentNode.getChildren().get(1);
+            addMappingToJournal(false);
         }
     }
 
-    public void addValueToJournal() {
+
+    public void addMappingToJournal(Boolean value) {
         if (map.containsKey(this.currentNode.getName())) {
-            String value = map.get(this.currentNode.getName());
-            if (value != null) {
-                journal.add(value);
+            String key = map.get(this.currentNode.getName());
+            if (key != null) {
+                addToJournal(key, value);
             }
         }
     }
 
-    public void addToJournal(String value) {
-        System.out.println(value);
-        journal.add(value);
+    public void addToJournal(String key, Boolean value) {
+        journal.put(key, value);
     }
 
     public boolean checkIfNull() {
         if(this.currentNode.isLeaf()) {
+            System.out.println("Is on leaf");
             System.out.println("Sending list: ");
             return true;
         }
@@ -55,11 +59,4 @@ public class Tree {
         return false;
     }
 
-
-
-    /*
-    1. om ThreeNode är null -> skicka listan
-    2. skicka frågan till klienten
-
-     */
 }

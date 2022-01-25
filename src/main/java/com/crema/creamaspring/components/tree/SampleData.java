@@ -38,12 +38,20 @@ public class SampleData {
     public static Map<String, String> createTreeMap() {
         Map<String, String> map = new HashMap<>();
 
+        // om det andra argumentet vore en lista, vad händer då senare
+        //testar
         map.put("node0", "slag");
+        map.put("node1", "slag");
         map.put("node00", "blod");
+        map.put("node01", "blod");
         map.put("node10", "feber");
+        map.put("node11", "feber");
         map.put("node010", "svullet");
+        map.put("node011", "svullet");
         map.put("node100", "yrsel");
+        map.put("node101", "yrsel");
         map.put("node1000", "kräkningar");
+        map.put("node1001", "kräkningar");
 
         return map;
     }

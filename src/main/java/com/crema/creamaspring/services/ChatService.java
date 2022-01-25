@@ -38,6 +38,7 @@ public class ChatService {
 
     public String getFinalResponse() {
         //return quoteService.getContainingQuote(tree.getJournal()).getText();
+        System.out.println(tree.getJournal().toString());
         return "Final response";
     }
 
@@ -59,7 +60,8 @@ public class ChatService {
     public String firstResponse(String response) {
 
         try {
-            tree.addToJournal(filter.filterSentence(response));
+            tree.addToJournal(filter.filterSentence(response), true);
+
         } catch (JSONException | NoSentenceException e) {
             e.printStackTrace();
         }
