@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.shaded.com.google.common.base.Verify;
 
 import java.util.List;
 
@@ -38,10 +40,12 @@ public class DbIntegrationTest {
         registry.add("spring.datasource.password",container::getPassword);
     }
 
+
     @Test
+    @Transactional
     void checkForEmptyDB(){
         List<ForumThread> threads = forumThreadRepository.findAll();
-        Assertions.assertNotNull(threads);
+        Assertions.assertEquals(0,threads.size());
     }
 
     @Test
@@ -49,6 +53,7 @@ public class DbIntegrationTest {
         String id = "somId";
         String text ="sometext";
         forumThreadRepository.save(new ForumThread(id,text));
+        Assertions.assertNotNull(forumThreadRepository.findAll());
 
     }
 }
