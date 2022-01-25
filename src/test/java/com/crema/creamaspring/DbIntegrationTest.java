@@ -1,7 +1,11 @@
 package com.crema.creamaspring;
 
 import com.crema.creamaspring.models.ForumThread;
+import com.crema.creamaspring.models.Post;
+import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.ForumThreadRepository;
+import com.crema.creamaspring.repositories.PostRepository;
+import com.crema.creamaspring.repositories.QuoteRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,8 +26,15 @@ public class DbIntegrationTest {
     @Autowired
     private ForumThreadRepository forumThreadRepository;
 
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private QuoteRepository quoteRepository;
+
     //Starting a container with specified image
     private static  MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:8.0.26")
+            .withInitScript("db_crema.sql")
             .withReuse(true);
 
 
@@ -40,8 +51,34 @@ public class DbIntegrationTest {
         registry.add("spring.datasource.password",container::getPassword);
     }
 
+    @Test
+    void checkInitForumThreadRepository(){
+
+        List<ForumThread> testList = forumThreadRepository.findAll();
+        for (ForumThread thread:testList) {
+            System.out.println(thread.toString());
+        }
+    }
 
     @Test
+    @Transactional
+    void checkInitPostRepository(){
+
+        List<Post> testList = postRepository.findAll();
+        for (Post post:testList) {
+            System.out.println(post);
+        }
+    }
+
+    @Test
+    void checkInitQuoteRepository(){
+
+        List<Quote> testList = quoteRepository.findAll();
+        for (Quote qoute:testList) {
+            System.out.println(qoute.toString());
+        }
+    }
+    /*@Test
     @Transactional
     void checkForEmptyDB(){
         List<ForumThread> threads = forumThreadRepository.findAll();
@@ -55,5 +92,5 @@ public class DbIntegrationTest {
         forumThreadRepository.save(new ForumThread(id,text));
         Assertions.assertNotNull(forumThreadRepository.findAll());
 
-    }
+    }*/
 }
