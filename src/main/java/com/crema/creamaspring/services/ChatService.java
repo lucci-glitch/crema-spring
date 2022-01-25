@@ -42,7 +42,8 @@ public class ChatService {
         //return quoteService.getContainingQuote(tree.getJournal()).getText();
         System.out.println(tree.getJournal().toString());
 
-        return quoteService.getRelevantQuotes(tree.getJournal()).toString();
+//        return quoteService.getRelevantQuotes(tree.getJournal()).toString();
+        return null;
     }
 
 

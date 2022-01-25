@@ -1,5 +1,6 @@
 package com.crema.creamaspring;
 
+import com.crema.creamaspring.models.EQouteCategory;
 import com.crema.creamaspring.models.ForumThread;
 import com.crema.creamaspring.models.Post;
 import com.crema.creamaspring.models.Quote;
@@ -7,6 +8,7 @@ import com.crema.creamaspring.repositories.ForumThreadRepository;
 import com.crema.creamaspring.repositories.PostRepository;
 import com.crema.creamaspring.repositories.QuoteRepository;
 import com.crema.creamaspring.services.ChatService;
+import com.crema.creamaspring.services.QuoteNotFoundException;
 import com.crema.creamaspring.services.QuoteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -91,14 +93,33 @@ public class DbIntegrationTest {
     }
 
     @Test
-    void testResult1(){
+    void testResult1() throws QuoteNotFoundException {
 
         Map<String, Boolean> inData = new HashMap<>();
         inData.put("ben",true);
         inData.put("blöder",true);
         inData.put("svullen",true);
 
-        quoteService.getRelevantQuotes(inData);
+//
+        System.out.println("getMatchingQuote:");
+        System.out.println(quoteService.getMatchingQuote(EQouteCategory.STATEMENT, "huvud"));
+
+        System.out.println("native query:");
+        List<Quote> finalQuotes = quoteService.getRelevantQuotes(inData.keySet().toArray()[0].toString(),
+                                                          inData.keySet().toArray()[1].toString(),
+                                                          inData.keySet().toArray()[2].toString());
+        StringBuilder sb = new StringBuilder();
+
+        for (Quote q : finalQuotes) {
+            sb.append(q.getText());
+        }
+
+        String finalPost = sb.toString();
+
+        System.out.println(finalPost);
+
+
+//        inData.keySet().toArray()[0].toString(), inData.keySet().toArray()[1].toString(), inData.keySet().toArray()[2].toString()
     }
 
 

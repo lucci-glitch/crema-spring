@@ -64,9 +64,11 @@ public class QuoteService {
         return quotes.get(randomQoute);
     }
 
-    public List<Quote> getRelevantQuotes(Map<String, Boolean> searchWords ){
+    public List<Quote> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3){
 
-        return quoteRepository.relevantQuotes(searchWords) ;
+        Quote quote = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3);
+
+        return quoteRepository.findSiblingQuotesById(quote.getId());
     }
 
 }
