@@ -6,6 +6,8 @@ import com.crema.creamaspring.models.Quote;
 import com.crema.creamaspring.repositories.ForumThreadRepository;
 import com.crema.creamaspring.repositories.PostRepository;
 import com.crema.creamaspring.repositories.QuoteRepository;
+import com.crema.creamaspring.services.ChatService;
+import com.crema.creamaspring.services.QuoteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.shaded.com.google.common.base.Verify;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //NONE will only create spring beans and not mock the servlet environment.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -31,6 +35,13 @@ public class DbIntegrationTest {
 
     @Autowired
     private QuoteRepository quoteRepository;
+
+    @Autowired
+    private ChatService chatService;
+
+    @Autowired
+    private QuoteService quoteService;
+
 
     //Starting a container with specified image
     private static  MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:8.0.26")
@@ -78,6 +89,19 @@ public class DbIntegrationTest {
             System.out.println(qoute.toString());
         }
     }
+
+    @Test
+    void testResult1(){
+
+        Map<String, Boolean> inData = new HashMap<>();
+        inData.put("ben",true);
+        inData.put("blöder",true);
+        inData.put("svullen",true);
+
+        quoteService.getRelevantQuotes(inData);
+    }
+
+
     /*@Test
     @Transactional
     void checkForEmptyDB(){

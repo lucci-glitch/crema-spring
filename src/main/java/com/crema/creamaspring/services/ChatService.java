@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Log4j2
 @Service
 public class ChatService {
@@ -28,7 +30,7 @@ public class ChatService {
         tree.proceed(response);
 
         if (tree.checkIfNull()) {
-            String finalResponse = getFinalResponse();
+         String finalResponse = getFinalResponse();
             this.tree = new Tree();
             return finalResponse;
         }
@@ -39,7 +41,8 @@ public class ChatService {
     public String getFinalResponse() {
         //return quoteService.getContainingQuote(tree.getJournal()).getText();
         System.out.println(tree.getJournal().toString());
-        return "Final response";
+
+        return quoteService.getRelevantQuotes(tree.getJournal()).toString();
     }
 
 
