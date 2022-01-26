@@ -41,7 +41,8 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
-            "WHERE quote.text LIKE %:searchWord1% OR quote.text LIKE  %:searchWord2% " +
+            "WHERE quote.text LIKE %:searchWord1% AND quote.text LIKE  %:searchWord2% " +
+            "   OR quote.text LIKE %:searchWord1% " +
             "    AND quote.post_id IN (\n" +
             "\n" +
             "        SELECT post.id\n" +
@@ -64,8 +65,9 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
-            "WHERE quote.text LIKE %:searchWord2% AND quote.text LIKE  %:searchWord3% " +
-            "   OR quote.text LIKE %:searchWord2% " +
+            "WHERE quote.text LIKE %:searchWord1% AND quote.text LIKE %:searchWord2% AND quote.text LIKE %:searchWord3%" +
+            "   OR quote.text LIKE %:searchWord1% AND quote.text LIKE %:searchWord2% " +
+            "   OR quote.text LIKE %:searchWord1% " +
             "    AND quote.post_id IN (\n" +
             "\n" +
             "        SELECT post.id\n" +
@@ -88,9 +90,10 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
-            "WHERE quote.text LIKE %:searchWord2% " +
-            "   OR quote.text LIKE %:searchWord3% " +
-            "   OR quote.text LIKE %:searchWord4% " +
+            "WHERE quote.text LIKE %:searchWord1% AND quote.text LIKE %:searchWord2% AND quote.text LIKE %:searchWord3% AND quote.text LIKE %:searchWord4% " +
+            "   OR quote.text LIKE %:searchWord1% AND quote.text LIKE %:searchWord2% AND quote.text LIKE %:searchWord3% " +
+            "   OR quote.text LIKE %:searchWord1% AND quote.text LIKE %:searchWord2% " +
+            "   OR quote.text LIKE %:searchWord1% " +
             "    AND quote.post_id IN (\n" +
             "\n" +
             "        SELECT post.id\n" +
