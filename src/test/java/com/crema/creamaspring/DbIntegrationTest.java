@@ -21,9 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.shaded.com.google.common.base.Verify;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //NONE will only create spring beans and not mock the servlet environment.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -95,30 +93,57 @@ public class DbIntegrationTest {
     @Test
     void testResult1() throws QuoteNotFoundException {
 
-        Map<String, Boolean> inData = new HashMap<>();
-        inData.put("ben",true);
-        inData.put("slag", false);
-        inData.put("feber",true);
-        inData.put("yrsel",true);
+        List<String> inData = new ArrayList<>();
+        inData.add("ansikte");
+        inData.add("slag");
+        inData.add("feber");
+        inData.add("kräk");
 
-//
-        System.out.println("getMatchingQuote:");
-        System.out.println(quoteService.getMatchingQuote(EQouteCategory.STATEMENT, "huvud"));
+    //    System.out.println("getMatchingQuote:");
+    //    System.out.println(quoteService.getMatchingQuote(EQouteCategory.STATEMENT, "huvud"));
 
-        System.out.println("native query:");
-        List<Quote> finalQuotes = quoteService.getRelevantQuotes(inData.keySet().toArray()[0].toString(),
-                                                          inData.keySet().toArray()[1].toString(),
-                                                          inData.keySet().toArray()[2].toString(),
-                                                          inData.keySet().toArray()[3].toString());
-        StringBuilder sb = new StringBuilder();
+        System.out.println("native query 2: " + inData.get(0) + " " + inData.get(1));
+        System.out.println("---------------");
+        List<Quote> finalQuotes2 = quoteService.getRelevantQuotes(inData.get(0),
+                inData.get(1)
+        );
 
-        for (Quote q : finalQuotes) {
-            sb.append(q.getText());
+        for (Quote q : finalQuotes2) {
+            //sb.append(q.getText());
+            System.out.println("POST - " + q.getText());
         }
 
-        String finalPost = sb.toString();
 
-        System.out.println(finalPost);
+        System.out.println("native query 3: " + inData.get(0) + " " + inData.get(1) + " " + inData.get(2));
+        System.out.println("---------------");
+        List<Quote> finalQuotes3 = quoteService.getRelevantQuotes(inData.get(0),
+                inData.get(1),
+                inData.get(2)
+        );
+
+        for (Quote q : finalQuotes3) {
+            //sb.append(q.getText());
+            System.out.println("POST - " + q.getText());
+        }
+
+        System.out.println("native query 4: " + inData.get(0) + " " + inData.get(1) + " " + inData.get(2) + " " + inData.get(3));
+        System.out.println("---------------");
+        List<Quote> finalQuotes4 = quoteService.getRelevantQuotes(inData.get(0),
+                inData.get(1),
+                inData.get(2),
+                inData.get(3)
+        );
+
+        for (Quote q : finalQuotes4) {
+            //sb.append(q.getText());
+            System.out.println(" POST - " +q.getText());
+        }
+
+        //StringBuilder sb = new StringBuilder();
+
+        //String finalPost = sb.toString();
+
+        //System.out.println(finalPost);
 
 
 //        inData.keySet().toArray()[0].toString(), inData.keySet().toArray()[1].toString(), inData.keySet().toArray()[2].toString()

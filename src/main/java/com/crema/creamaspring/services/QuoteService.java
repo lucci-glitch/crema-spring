@@ -62,11 +62,37 @@ public class QuoteService {
         return quotes.get(randomQoute);
     }
 
+    public List<Quote> getRelevantQuotes(String searchWord1, String searchWord2){
+
+        List<Quote> quote = quoteRepository.relevantQuote(searchWord1, searchWord2);
+
+        for (Quote q: quote) {
+            System.out.println("in Service: " +q.getText());
+        }
+
+        return quoteRepository.findSiblingQuotesById(quote.get(0).getId());
+    }
+
+    public List<Quote> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3){
+
+        List<Quote> quote = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3);
+
+        for (Quote q: quote) {
+            System.out.println("in Service: " +q.getText());
+        }
+
+        return quoteRepository.findSiblingQuotesById(quote.get(0).getId());
+    }
+
     public List<Quote> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3, String searchWord4){
 
-        Quote quote = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3, searchWord4);
+        List<Quote> quote = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3, searchWord4);
 
-        return quoteRepository.findSiblingQuotesById(quote.getId());
+        for (Quote q: quote) {
+            System.out.println("in Service: " +q.getText());
+        }
+
+        return quoteRepository.findSiblingQuotesById(quote.get(0).getId());
     }
 
 }
