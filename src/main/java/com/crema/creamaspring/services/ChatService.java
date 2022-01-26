@@ -29,7 +29,7 @@ public class ChatService {
 
     public List<String> chatQuestions(String response) {
         tree.proceed(response);
-        List<String> wraperLIST = new ArrayList<>();
+        List<String> wrapperLIST = new ArrayList<>();
 
 
         if (tree.checkIfNull()) {
@@ -42,8 +42,8 @@ public class ChatService {
             return listTosend;
         }
 
-        wraperLIST.add(tree.getCurrentNode().getData());
-        return wraperLIST;
+        wrapperLIST.add(tree.getCurrentNode().getData());
+        return wrapperLIST;
     }
 
     public void getFinalResponse() {
