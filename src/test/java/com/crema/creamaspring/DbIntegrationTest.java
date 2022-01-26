@@ -92,6 +92,7 @@ public class DbIntegrationTest {
 
     @Test
     void testResult1() throws QuoteNotFoundException {
+        StringBuilder sb = new StringBuilder();
 
         List<String> inData = new ArrayList<>();
         inData.add("ansikte");
@@ -99,8 +100,8 @@ public class DbIntegrationTest {
         inData.add("feber");
         inData.add("kräk");
 
-    //    System.out.println("getMatchingQuote:");
-    //    System.out.println(quoteService.getMatchingQuote(EQouteCategory.STATEMENT, "huvud"));
+        //    System.out.println("getMatchingQuote:");
+        //    System.out.println(quoteService.getMatchingQuote(EQouteCategory.STATEMENT, "huvud"));
 
         System.out.println("native query 2: " + inData.get(0) + " " + inData.get(1));
         System.out.println("---------------");
@@ -109,7 +110,7 @@ public class DbIntegrationTest {
         );
 
         for (Quote q : finalQuotes2) {
-            //sb.append(q.getText());
+            sb.append(q.getText());
             System.out.println("POST - " + q.getText());
         }
 
@@ -122,7 +123,7 @@ public class DbIntegrationTest {
         );
 
         for (Quote q : finalQuotes3) {
-            //sb.append(q.getText());
+//            sb.append(q.getText());
             System.out.println("POST - " + q.getText());
         }
 
@@ -135,15 +136,13 @@ public class DbIntegrationTest {
         );
 
         for (Quote q : finalQuotes4) {
-            //sb.append(q.getText());
+//            sb.append(q.getText());
             System.out.println(" POST - " +q.getText());
         }
 
-        //StringBuilder sb = new StringBuilder();
 
-        //String finalPost = sb.toString();
-
-        //System.out.println(finalPost);
+        String finalPost = sb.toString();
+        System.out.println("Här är final: " + finalPost);
 
 
 //        inData.keySet().toArray()[0].toString(), inData.keySet().toArray()[1].toString(), inData.keySet().toArray()[2].toString()

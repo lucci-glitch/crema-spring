@@ -11,41 +11,38 @@ import java.util.Map;
 @Data
 public class Tree {
     private TreeNode<String> currentNode;
-    // private List<String> journal;
-    private Map<String, Boolean> journal;
+    private List<String> journal;
     private Map<String, String> map;
 
     public Tree() {
         this.currentNode = SampleData.buildTree();
-        this.journal = new HashMap<>();
+        this.journal = new ArrayList<>();
         this.map = SampleData.createTreeMap();
     }
 
-    // java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
     public void proceed(String answer) {
 
         if(answer.equalsIgnoreCase("ja")) {
             this.currentNode = this.currentNode.getChildren().get(0);
-            addMappingToJournal(true);
+            addMappingToJournal();
         }
         else {
             this.currentNode = this.currentNode.getChildren().get(1);
-            addMappingToJournal(false);
         }
     }
 
 
-    public void addMappingToJournal(Boolean value) {
+    public void addMappingToJournal() {
         if (map.containsKey(this.currentNode.getName())) {
-            String key = map.get(this.currentNode.getName());
-            if (key != null) {
-                addToJournal(key, value);
+            String value = map.get(this.currentNode.getName());
+            if (value != null) {
+                addToJournal(value);
             }
         }
     }
 
-    public void addToJournal(String key, Boolean value) {
-        journal.put(key, value);
+    public void addToJournal(String value) {
+        journal.add(value);
     }
 
     public boolean checkIfNull() {

@@ -40,9 +40,36 @@ public class ChatService {
 
     public String getFinalResponse() {
         //return quoteService.getContainingQuote(tree.getJournal()).getText();
-        System.out.println(tree.getJournal().toString());
+        //System.out.println(tree.getJournal().toString());
+        String word1;
+        String word2;
+        String word3;
+        String word4;
+        List<Quote> listOfQuotes;
 
-//        return quoteService.getRelevantQuotes(tree.getJournal()).toString();
+        switch(tree.getJournal().size()) {
+            case 2:
+                word1 = tree.getJournal().get(0);
+                word2 = tree.getJournal().get(1);
+                listOfQuotes = quoteService.getRelevantQuotes(word1, word2);
+                break;
+            case 3:
+                word1 = tree.getJournal().get(0);
+                word2 = tree.getJournal().get(1);
+                word3 = tree.getJournal().get(2);
+                listOfQuotes = quoteService.getRelevantQuotes(word1, word2, word3);
+                break;
+            case 4:
+                word1 = tree.getJournal().get(0);
+                word2 = tree.getJournal().get(1);
+                word3 = tree.getJournal().get(2);
+                word4 = tree.getJournal().get(3);
+                listOfQuotes = quoteService.getRelevantQuotes(word1, word2, word3, word4);
+                break;
+            default:
+                break;
+        }
+
         return null;
     }
 
@@ -64,7 +91,7 @@ public class ChatService {
     public String firstResponse(String response) {
 
         try {
-            tree.addToJournal(filter.filterSentence(response), true);
+            tree.addToJournal(filter.filterSentence(response));
 
         } catch (JSONException | NoSentenceException e) {
             e.printStackTrace();
