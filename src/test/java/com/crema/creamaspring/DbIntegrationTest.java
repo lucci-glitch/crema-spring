@@ -97,8 +97,9 @@ public class DbIntegrationTest {
 
         Map<String, Boolean> inData = new HashMap<>();
         inData.put("ben",true);
-        inData.put("blöder",true);
-        inData.put("svullen",true);
+        inData.put("slag", false);
+        inData.put("feber",true);
+        inData.put("yrsel",true);
 
 //
         System.out.println("getMatchingQuote:");
@@ -107,7 +108,8 @@ public class DbIntegrationTest {
         System.out.println("native query:");
         List<Quote> finalQuotes = quoteService.getRelevantQuotes(inData.keySet().toArray()[0].toString(),
                                                           inData.keySet().toArray()[1].toString(),
-                                                          inData.keySet().toArray()[2].toString());
+                                                          inData.keySet().toArray()[2].toString(),
+                                                          inData.keySet().toArray()[3].toString());
         StringBuilder sb = new StringBuilder();
 
         for (Quote q : finalQuotes) {

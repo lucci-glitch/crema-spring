@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Log4j2
@@ -64,9 +62,9 @@ public class QuoteService {
         return quotes.get(randomQoute);
     }
 
-    public List<Quote> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3){
+    public List<Quote> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3, String searchWord4){
 
-        Quote quote = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3);
+        Quote quote = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3, searchWord4);
 
         return quoteRepository.findSiblingQuotesById(quote.getId());
     }
