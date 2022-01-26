@@ -108,7 +108,7 @@ public class QuoteService {
             StringBuilder builder = new StringBuilder();
 
             for (Quote qoute : siblings) {
-                builder.append(qoute.getText());
+                builder.append(qoute.getText() + " ");
             }
 
             post.add(builder.toString());
