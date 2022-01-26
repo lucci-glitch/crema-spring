@@ -62,7 +62,7 @@ public class DbIntegrationTest {
         registry.add("spring.datasource.password",container::getPassword);
     }
 
-    @Test
+    /*@Test
     void checkInitForumThreadRepository(){
 
         List<ForumThread> testList = forumThreadRepository.findAll();
@@ -95,49 +95,46 @@ public class DbIntegrationTest {
         StringBuilder sb = new StringBuilder();
 
         List<String> inData = new ArrayList<>();
-        inData.add("ansikte");
-        inData.add("slag");
+        inData.add("muffen");
+        inData.add("våld");
         inData.add("feber");
-        inData.add("kräk");
+        inData.add("kräkning");
 
         //    System.out.println("getMatchingQuote:");
         //    System.out.println(quoteService.getMatchingQuote(EQouteCategory.STATEMENT, "huvud"));
 
         System.out.println("native query 2: " + inData.get(0) + " " + inData.get(1));
         System.out.println("---------------");
-        List<Quote> finalQuotes2 = quoteService.getRelevantQuotes(inData.get(0),
+        List<String> finalQuotes2 = quoteService.getRelevantQuotes(inData.get(0),
                 inData.get(1)
         );
 
-        for (Quote q : finalQuotes2) {
-            sb.append(q.getText());
-            System.out.println("POST - " + q.getText());
+        for (String text : finalQuotes2) {
+            System.out.println(text);
         }
 
 
         System.out.println("native query 3: " + inData.get(0) + " " + inData.get(1) + " " + inData.get(2));
         System.out.println("---------------");
-        List<Quote> finalQuotes3 = quoteService.getRelevantQuotes(inData.get(0),
+        List<String> finalQuotes3 = quoteService.getRelevantQuotes(inData.get(0),
                 inData.get(1),
                 inData.get(2)
         );
 
-        for (Quote q : finalQuotes3) {
-//            sb.append(q.getText());
-            System.out.println("POST - " + q.getText());
+        for (String text : finalQuotes3) {
+            System.out.println(text);
         }
 
         System.out.println("native query 4: " + inData.get(0) + " " + inData.get(1) + " " + inData.get(2) + " " + inData.get(3));
         System.out.println("---------------");
-        List<Quote> finalQuotes4 = quoteService.getRelevantQuotes(inData.get(0),
+        List<String> finalQuotes4 = quoteService.getRelevantQuotes(inData.get(0),
                 inData.get(1),
                 inData.get(2),
                 inData.get(3)
         );
 
-        for (Quote q : finalQuotes4) {
-//            sb.append(q.getText());
-            System.out.println(" POST - " +q.getText());
+        for (String text : finalQuotes4) {
+            System.out.println(text);
         }
 
 
@@ -147,7 +144,7 @@ public class DbIntegrationTest {
 
 
 //        inData.keySet().toArray()[0].toString(), inData.keySet().toArray()[1].toString(), inData.keySet().toArray()[2].toString()
-    }
+    }*/
 
 
     /*@Test

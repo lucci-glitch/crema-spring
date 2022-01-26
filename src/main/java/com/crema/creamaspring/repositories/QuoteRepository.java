@@ -18,6 +18,29 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
+            "WHERE quote.text LIKE %:searchWord1% " +
+            "    AND quote.post_id IN (\n" +
+            "\n" +
+            "        SELECT post.id\n" +
+            "        FROM post\n" +
+            "                 INNER JOIN\n" +
+            "             (\n" +
+            "                 SELECT post.forum_thread_id\n" +
+            "                 FROM quote\n" +
+            "                          INNER JOIN post\n" +
+            "                                     ON post.id = quote.post_id\n" +
+            "                 WHERE quote.text LIKE %:searchWord1%" +
+            "                 GROUP BY post.forum_thread_id\n" +
+            "                 ORDER BY COUNT(text) DESC\n" +
+            "                 LIMIT 10\n" +
+            "             ) AS top_10\n" +
+            "             ON top_10.forum_thread_id = post.forum_thread_id\n" +
+            "    ) LIMIT 1"
+            , nativeQuery = true)
+    List<Quote> relevantQuote(@Param("searchWord1") String searchWord1);
+
+    @Query(value = "SELECT *" +
+            "FROM quote " +
             "WHERE quote.text LIKE %:searchWord1% OR quote.text LIKE  %:searchWord2% " +
             "    AND quote.post_id IN (\n" +
             "\n" +
@@ -35,7 +58,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             "                 LIMIT 10\n" +
             "             ) AS top_10\n" +
             "             ON top_10.forum_thread_id = post.forum_thread_id\n" +
-            "    ) LIMIT 5"
+            "    ) LIMIT 1"
             , nativeQuery = true)
     List<Quote> relevantQuote(@Param("searchWord1") String searchWord1, @Param("searchWord2")String searchWord2);
 
@@ -59,7 +82,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             "                 LIMIT 10\n" +
             "             ) AS top_10\n" +
             "             ON top_10.forum_thread_id = post.forum_thread_id\n" +
-            "    ) LIMIT 5"
+            "    ) LIMIT 2"
             , nativeQuery = true)
     List<Quote> relevantQuote(@Param("searchWord1") String searchWord1, @Param("searchWord2")String searchWord2, @Param("searchWord3")String searchWord3);
 
@@ -84,7 +107,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             "                 LIMIT 10\n" +
             "             ) AS top_10\n" +
             "             ON top_10.forum_thread_id = post.forum_thread_id\n" +
-            "    ) LIMIT 5"
+            "    ) LIMIT 2"
             , nativeQuery = true)
     List<Quote> relevantQuote(@Param("searchWord1") String searchWord1, @Param("searchWord2")String searchWord2, @Param("searchWord3")String searchWord3, @Param("searchWord4")String searchWord4);
 

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TreeNodeTest {
 
-    @Test
+   /* @Test
     public void testIsRoot() {
         TreeNode<String> treeRoot = SampleData.buildTree();
         assertTrue(treeRoot.isRoot());
@@ -33,5 +33,5 @@ class TreeNodeTest {
                 }
             }
         }
-    }
+    }*/
 }

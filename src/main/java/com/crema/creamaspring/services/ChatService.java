@@ -27,60 +27,71 @@ public class ChatService {
         this.quoteService = quoteService;
     }
 
-    public String chatQuestions(String response) {
+    public List<String> chatQuestions(String response) {
         tree.proceed(response);
+        List<String> wraperLIST = new ArrayList<>();
+
 
         if (tree.checkIfNull()) {
-         String finalResponse = getFinalResponse();
+            System.out.println("----in if tree checkIfnull----");
+            List<String> listTosend = getPostsToSend();
+            for (String text:listTosend) {
+                System.out.println(text);
+            }
             this.tree = new Tree();
-            return finalResponse;
+            return listTosend;
         }
 
-        return tree.getCurrentNode().getData();
+        wraperLIST.add(tree.getCurrentNode().getData());
+        return wraperLIST;
     }
 
     public void getFinalResponse() {
 
     }
 
-    public String getPostsToSend() {
-        //return quoteService.getContainingQuote(tree.getJournal()).getText();
-        //System.out.println(tree.getJournal().toString());
+    public List<String> getPostsToSend() {
+
         String word1;
         String word2;
         String word3;
         String word4;
-        List<Quote> listOfQuotes = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
+        List<String> listOfPost = new ArrayList<>();
+        System.out.println("----Size of tree----");
+        System.out.println(tree.getJournal().size());
 
         switch(tree.getJournal().size()) {
+            case 1:
+                word1 = tree.getJournal().get(0);
+
+                listOfPost = quoteService.getRelevantQuotes(word1);
+                break;
             case 2:
                 word1 = tree.getJournal().get(0);
                 word2 = tree.getJournal().get(1);
-                listOfQuotes = quoteService.getRelevantQuotes(word1, word2);
+                listOfPost = quoteService.getRelevantQuotes(word1, word2);
                 break;
             case 3:
                 word1 = tree.getJournal().get(0);
                 word2 = tree.getJournal().get(1);
                 word3 = tree.getJournal().get(2);
-                listOfQuotes = quoteService.getRelevantQuotes(word1, word2, word3);
+                listOfPost = quoteService.getRelevantQuotes(word1, word2, word3);
                 break;
             case 4:
                 word1 = tree.getJournal().get(0);
                 word2 = tree.getJournal().get(1);
                 word3 = tree.getJournal().get(2);
                 word4 = tree.getJournal().get(3);
-                listOfQuotes = quoteService.getRelevantQuotes(word1, word2, word3, word4);
+                listOfPost = quoteService.getRelevantQuotes(word1, word2, word3, word4);
                 break;
             default:
                 break;
         }
+        System.out.println("----list of post getPostsToSend----");
+        for (String text:listOfPost) {
+            System.out.println(text); }
 
-        for (Quote quote : listOfQuotes) {
-            sb.append(quote + " ");
-        }
-
-        return sb.toString();
+        return listOfPost;
     }
 
 

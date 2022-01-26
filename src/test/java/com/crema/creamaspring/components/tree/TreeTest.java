@@ -25,7 +25,7 @@ class TreeTest {
         map = SampleData.createTreeMap();
     }
 
-    @Test
+    /*@Test
     public void testGetFinalResult() {
         tree.proceed("nej");
         tree.proceed("ja");
@@ -127,6 +127,6 @@ class TreeTest {
         System.out.println(tree.getJournal());
 
         assertTrue(tree.getJournal().contains("slag"));
-    }
+    }*/
 
 }
