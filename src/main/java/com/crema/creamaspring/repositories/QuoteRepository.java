@@ -90,5 +90,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value="SELECT * FROM quote WHERE quote.post_id = (SELECT quote.post_id FROM quote WHERE quote.id =:id)", nativeQuery = true)
     List<Quote> findSiblingQuotesById(Integer id);
-//
+
+    @Query(value="SELECT post.forum_thread_id FROM post WHERE post.id = (SELECT quote.post_id FROM quote WHERE quote.id =:id)", nativeQuery = true)
+    String findForumThread(Integer id);
 }

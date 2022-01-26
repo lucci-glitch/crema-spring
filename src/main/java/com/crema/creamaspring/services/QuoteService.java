@@ -92,7 +92,16 @@ public class QuoteService {
             System.out.println("in Service: " +q.getText());
         }
 
+        System.out.println(" HÄR ÄR DET NÅNTING: ");
+        System.out.println(quoteRepository.findForumThread(quote.get(0).getId()));
+
         return quoteRepository.findSiblingQuotesById(quote.get(0).getId());
+    }
+
+    public String getForumThreadPage(int quote_id) {
+        String forumthread_id = quoteRepository.findForumThread(quote_id);
+        String url = "https://www.flashback.org/t" + forumthread_id;
+        return url;
     }
 
 }

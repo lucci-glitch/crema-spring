@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -38,14 +39,19 @@ public class ChatService {
         return tree.getCurrentNode().getData();
     }
 
-    public String getFinalResponse() {
+    public void getFinalResponse() {
+
+    }
+
+    public String getPostsToSend() {
         //return quoteService.getContainingQuote(tree.getJournal()).getText();
         //System.out.println(tree.getJournal().toString());
         String word1;
         String word2;
         String word3;
         String word4;
-        List<Quote> listOfQuotes;
+        List<Quote> listOfQuotes = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
 
         switch(tree.getJournal().size()) {
             case 2:
@@ -70,7 +76,11 @@ public class ChatService {
                 break;
         }
 
-        return null;
+        for (Quote quote : listOfQuotes) {
+            sb.append(quote + " ");
+        }
+
+        return sb.toString();
     }
 
 

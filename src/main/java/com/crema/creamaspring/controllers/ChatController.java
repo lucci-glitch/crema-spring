@@ -28,7 +28,7 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public ResponseEntity<String> chatTree(@RequestParam String response) {
+    public ResponseEntity<?> chatTree(@RequestParam String response) {
         return new ResponseEntity<>(chatService.chatQuestions(response), HttpStatus.OK);
     }
 
