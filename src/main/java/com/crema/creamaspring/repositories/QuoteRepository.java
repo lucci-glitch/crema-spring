@@ -18,7 +18,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
-            "WHERE quote.text LIKE %:searchWord1% OR quote.text LIKE  %:searchWord2% " +
+            "WHERE quote.text LIKE %:searchWord1% OR quote.text LIKE  %:searchWord2%" +
             "    AND quote.post_id IN (\n" +
             "\n" +
             "        SELECT post.id\n" +
@@ -29,7 +29,9 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             "                 FROM quote\n" +
             "                          INNER JOIN post\n" +
             "                                     ON post.id = quote.post_id\n" +
-            "                 WHERE quote.text LIKE %:searchWord1%" +
+            "                 WHERE quote.text LIKE %:searchWord1%"  +
+            "                 And quote.text LIKE %:searchWord2% " +
+            "                 OR quote.text LIKE %:searchWord1% " +
             "                 GROUP BY post.forum_thread_id\n" +
             "                 ORDER BY COUNT(text) DESC\n" +
             "                 LIMIT 10\n" +
@@ -41,7 +43,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
-            "WHERE quote.text LIKE %:searchWord2% AND quote.text LIKE  %:searchWord3% " +
+            "WHERE quote.text LIKE %:searchWord1% AND quote.text LIKE  %:searchWord3% " +
             "   OR quote.text LIKE %:searchWord2% " +
             "    AND quote.post_id IN (\n" +
             "\n" +
@@ -54,6 +56,8 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             "                          INNER JOIN post\n" +
             "                                     ON post.id = quote.post_id\n" +
             "                 WHERE quote.text LIKE %:searchWord1%" +
+            "                 And quote.text LIKE %:searchWord2% " +
+            "                 OR quote.text LIKE %:searchWord1% " +
             "                 GROUP BY post.forum_thread_id\n" +
             "                 ORDER BY COUNT(text) DESC\n" +
             "                 LIMIT 10\n" +
@@ -65,7 +69,8 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT *" +
             "FROM quote " +
-            "WHERE quote.text LIKE %:searchWord2% " +
+            "WHERE quote.text LIKE %:searchWord1% " +
+            "   OR quote.text LIKE %:searchWord2% " +
             "   OR quote.text LIKE %:searchWord3% " +
             "   OR quote.text LIKE %:searchWord4% " +
             "    AND quote.post_id IN (\n" +
@@ -79,6 +84,8 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             "                          INNER JOIN post\n" +
             "                                     ON post.id = quote.post_id\n" +
             "                 WHERE quote.text LIKE %:searchWord1%" +
+            "                 And quote.text LIKE %:searchWord2% " +
+            "                 OR quote.text LIKE %:searchWord1%  " +
             "                 GROUP BY post.forum_thread_id\n" +
             "                 ORDER BY COUNT(text) DESC\n" +
             "                 LIMIT 10\n" +

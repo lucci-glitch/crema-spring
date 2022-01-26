@@ -94,8 +94,8 @@ public class DbIntegrationTest {
     void testResult1() throws QuoteNotFoundException {
 
         List<String> inData = new ArrayList<>();
-        inData.add("ansikte");
-        inData.add("slag");
+        inData.add("armar");
+        inData.add("skada");
         inData.add("feber");
         inData.add("kräk");
 
