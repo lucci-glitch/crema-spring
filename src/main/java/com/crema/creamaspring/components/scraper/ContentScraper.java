@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Scrapes qoutes and posts from a forum thread on flashback.org.
+ *
+ */
+
 @Slf4j
 @Component
 public class ContentScraper implements IScraper<Post, ForumThread> {
@@ -23,6 +27,13 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
     private static final long MINTIME = 650;
     private static final String BASEURL = "https://www.flashback.org/t";
 //    List<Post> forumPosts = new ArrayList<>();
+
+
+    /** Retrieves a list of post from a forum thread.
+     *
+     * @param forumThread - forum thread with is scraped.
+     * @return - a list of posts.
+     */
 
     @Override
     public List<Post> retrieveData(ForumThread forumThread) {
@@ -63,6 +74,11 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         return pageableForumPosts;
     }
 
+    /** Connects to a webpage based on String (URL).
+     *
+     * @param url - url to be connect to.
+     * @return - returns a HTML Document.
+     */
 
     @Override
     public Document getWebPage(String url) {
@@ -76,11 +92,23 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         return null;
     }
 
+    /** Finds node elements by class name "post_message" in a HTML Document (Webpage)
+     *
+     * @param webPage - a HTML Document to be inspected.
+     * @return - returns list of Elements.
+     */
+
     @Override
     public Elements getWebpageElements(Document webPage) {
         return webPage.getElementsByClass("post_message");
     }
 
+    /** Parses the list of elements to a Post.
+     *
+     * @param postElements - a list of elements to be parsed.
+     * @param forumThread - a forum thread for post reference.
+     * @return - returns a list of post after the elements been parsed.
+     */
 
     public List<Post> parseElements(Elements postElements, ForumThread forumThread) {
         List<Post> posts = new ArrayList<>();
@@ -103,6 +131,11 @@ public class ContentScraper implements IScraper<Post, ForumThread> {
         return posts;
     }
 
+    /** Determine if a Qoute is a question or a statement.
+     *
+     * @param quote - a qoute to be evaluated.
+     * @return - returns a Enum (EQouteCategory) based of the ending of the String.
+     */
     public EQouteCategory questionOrStatement(String quote) {
         if (quote.contains("?")) {
             return EQouteCategory.QUESTION;

@@ -11,12 +11,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Scrapes forum threads from flashback.org based on forum collection url.
+ *
+ */
+
 @Slf4j
 @Component
 public class ForumThreadScraper implements IScraper<ForumThread, String> {
     //TODO: abstrakt klass med lista som attribute
     List<ForumThread> forumThreads = new ArrayList<>();
 
+    /** Retrieves a list of post from a forum thread.
+     *
+     * @param source - a source (url) with is scraped.
+     * @return - a list of forum threads.
+     */
     @Override
     public List<ForumThread> retrieveData(String source) {
         Document document = getWebPage("https://www.flashback.org/" + source);
@@ -25,12 +34,17 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
         return forumThreads;
     }
 
+    /** Connects to a webpage based on String (URL).
+     *
+     * @param url - url to be connect to.
+     * @return - returns a HTML Document.
+     */
 
     @Override
     public Document getWebPage(String url) {
         try {
             return Jsoup
-                    .connect("https://www.flashback.org/f97")
+                    .connect(url)
                     .get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,14 +52,24 @@ public class ForumThreadScraper implements IScraper<ForumThread, String> {
         return null;
     }
 
+    /** Finds node elements by class name "td_title" in a HTML Document (Webpage)
+     *
+     * @param webPage - a HTML Document to be inspected.
+     * @return - returns list of Elements.
+     */
+
     @Override
     public Elements getWebpageElements(Document webPage) {
         //return webPage.getElementsByClass("td_title").select("[id^=thread_title_]");
         return webPage.getElementsByClass("td_title");
     }
 
-    public void parseElements(Elements postElements) {
-        for (var element : postElements) {
+    /** Parses the list of elements to a ForumThread.
+     *
+     * @param pageElements - a list of elements to be parsed.
+     */
+    public void parseElements(Elements pageElements) {
+        for (var element : pageElements) {
 
             String id = element
                     .select("[id^=thread_title_]")

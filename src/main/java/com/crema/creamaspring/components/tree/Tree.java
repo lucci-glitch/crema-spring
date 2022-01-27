@@ -19,6 +19,10 @@ public class Tree {
         this.map = SampleData.createTreeMap();
     }
 
+    /** Advances down in proper sequence the Binary Tree based on answer.
+     *
+     * @param answer - a answer to be evaluate.
+     */
     // java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
     public void proceed(String answer) {
 
@@ -30,6 +34,9 @@ public class Tree {
             this.currentNode = this.currentNode.getChildren().get(1);
         }
     }
+
+    /** Adds the current node name to the journal if the map contains its key.
+     */
 
     public void addValueToJournal() {
         if (map.containsKey(this.currentNode.getName())) {
@@ -44,6 +51,11 @@ public class Tree {
         System.out.println(value);
         journal.add(value);
     }
+
+    /** Checks if the current node in the Tree is leaf or still on a branch.
+     *
+     * @return a True if the current node is leaf else False.
+     */
 
     public boolean checkIfNull() {
         if(this.currentNode.isLeaf()) {
