@@ -61,7 +61,67 @@ public class QuoteService {
         int randomQoute = ThreadLocalRandom.current().nextInt(0, quotes.size());
         return quotes.get(randomQoute);
     }
+    public List<String> getRelevantQuotes(String searchWord1){
 
+        List<Quote> quotes = quoteRepository.relevantQuote(searchWord1);
+        List<String> post= new ArrayList<>();
+
+        extractPost(post, quotes);
+
+        return post;
+    }
+
+    public List<String> getRelevantQuotes(String searchWord1, String searchWord2){
+
+        List<Quote> quotes = quoteRepository.relevantQuote(searchWord1, searchWord2);
+        List<String> post= new ArrayList<>();
+
+        extractPost(post, quotes);
+
+        return post;
+    }
+
+    public List<String> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3){
+
+        List<Quote> quotes = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3);
+        List<String> post= new ArrayList<>();
+
+        extractPost(post, quotes);
+
+        return post;
+    }
+
+    public List<String> getRelevantQuotes(String searchWord1, String searchWord2, String searchWord3, String searchWord4){
+
+        List<Quote> quotes = quoteRepository.relevantQuote(searchWord1, searchWord2, searchWord3, searchWord4);
+        List<String> post= new ArrayList<>();
+
+        extractPost(post, quotes);
+
+        return post;
+    }
+
+    private void extractPost(List<String> post, List<Quote> quotes) {
+        for(int i = 0; i < quotes.size(); i++) {
+
+            List<Quote> siblings = quoteRepository.findSiblingQuotesById(quotes.get(i).getId());
+            StringBuilder builder = new StringBuilder();
+
+            for (Quote qoute : siblings) {
+                builder.append(qoute.getText() + " ");
+            }
+
+            post.add(builder.toString());
+            post.add(getForumThreadPage(quotes.get(i).getId()));
+        }
+    }
+
+
+    public String getForumThreadPage(int quote_id) {
+        String forumthread_id = quoteRepository.findForumThread(quote_id);
+        String url = "https://www.flashback.org/t" + forumthread_id;
+        return url;
+    }
 
 }
 

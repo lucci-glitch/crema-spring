@@ -10,6 +10,9 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Log4j2
 @Service
 public class ChatService {
@@ -24,21 +27,71 @@ public class ChatService {
         this.quoteService = quoteService;
     }
 
-    public String chatQuestions(String response) {
+    public List<String> chatQuestions(String response) {
         tree.proceed(response);
+        List<String> wrapperLIST = new ArrayList<>();
+
 
         if (tree.checkIfNull()) {
-            String finalResponse = getFinalResponse();
+            System.out.println("----in if tree checkIfnull----");
+            List<String> listTosend = getPostsToSend();
+            for (String text:listTosend) {
+                System.out.println(text);
+            }
             this.tree = new Tree();
-            return finalResponse;
+            return listTosend;
         }
 
-        return tree.getCurrentNode().getData();
+        wrapperLIST.add(tree.getCurrentNode().getData());
+        return wrapperLIST;
     }
 
-    public String getFinalResponse() {
-        //return quoteService.getContainingQuote(tree.getJournal()).getText();
-        return "Final response";
+    public void getFinalResponse() {
+
+    }
+
+    public List<String> getPostsToSend() {
+
+        String word1;
+        String word2;
+        String word3;
+        String word4;
+        List<String> listOfPost = new ArrayList<>();
+        System.out.println("----Size of tree----");
+        System.out.println(tree.getJournal().size());
+
+        switch(tree.getJournal().size()) {
+            case 1:
+                word1 = tree.getJournal().get(0);
+
+                listOfPost = quoteService.getRelevantQuotes(word1);
+                break;
+            case 2:
+                word1 = tree.getJournal().get(0);
+                word2 = tree.getJournal().get(1);
+                listOfPost = quoteService.getRelevantQuotes(word1, word2);
+                break;
+            case 3:
+                word1 = tree.getJournal().get(0);
+                word2 = tree.getJournal().get(1);
+                word3 = tree.getJournal().get(2);
+                listOfPost = quoteService.getRelevantQuotes(word1, word2, word3);
+                break;
+            case 4:
+                word1 = tree.getJournal().get(0);
+                word2 = tree.getJournal().get(1);
+                word3 = tree.getJournal().get(2);
+                word4 = tree.getJournal().get(3);
+                listOfPost = quoteService.getRelevantQuotes(word1, word2, word3, word4);
+                break;
+            default:
+                break;
+        }
+        System.out.println("----list of post getPostsToSend----");
+        for (String text:listOfPost) {
+            System.out.println(text); }
+
+        return listOfPost;
     }
 
 
@@ -60,6 +113,7 @@ public class ChatService {
 
         try {
             tree.addToJournal(filter.filterSentence(response));
+
         } catch (JSONException | NoSentenceException e) {
             e.printStackTrace();
         }

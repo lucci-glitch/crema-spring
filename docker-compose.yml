@@ -2,7 +2,7 @@ version: "3.6"
 services:
   tomcat:
       image: tomcat:9.0
-      #command: bash -c "mv webapps webapps2 && mv webapps.dist/ webapps"
+
       ports:
         - "8080:8080"
 
