@@ -6,9 +6,9 @@ import java.util.Map;
 public class SampleData {
 
     public static TreeNode<String> buildTree() {
-        TreeNode<String> root = new TreeNode<String>("root","Har du slagit dig?");
+        TreeNode<String> root = new TreeNode<>("root","Har du slagit dig?");
         {
-            TreeNode<String> node0 = root.addChild("node0", "Blöder du?");
+            TreeNode<String> node0 = root.addChild("node0", "Blöder det?");
             {
                 TreeNode<String> node00 = node0.addChild("node00",null);
                 TreeNode<String> node01 = node0.addChild("node01","Är det svullet?");
@@ -37,14 +37,12 @@ public class SampleData {
 
     public static Map<String, String> createTreeMap() {
         Map<String, String> map = new HashMap<>();
-
         map.put("node0", "slag");
         map.put("node00", "blod");
         map.put("node10", "feber");
         map.put("node010", "svullet");
         map.put("node100", "yrsel");
-        map.put("node1000", "kräkningar");
-
+        map.put("node1000", "kräk");
         return map;
     }
 
